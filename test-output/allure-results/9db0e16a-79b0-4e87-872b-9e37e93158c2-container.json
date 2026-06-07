@@ -1,0 +1,1 @@
+{"uuid":"9db0e16a-79b0-4e87-872b-9e37e93158c2","name":"demoPlaze.Register.setup","children":["e3693ae5-cb3a-4f63-8ec3-a9fca45d94fc"],"description":"","befores":[{"name":"setup","status":"broken","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1780503206329,"stop":1780503206329}],"afters":[],"start":1780503206329,"stop":1780503206329}
