@@ -4,6 +4,9 @@ import demoPlaze.utiles.logs.LogsManager;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.logging.LogManager;
 
 public class FileUtiles {
@@ -49,7 +52,37 @@ public class FileUtiles {
             LogsManager.error(e.getMessage());
         }
     }
-}
+    public static void copyDirectory(String sourcePath, String destinationPath) {
+        Path source = Paths.get(USER_DIR + sourcePath);
+        Path destination = Paths.get(USER_DIR + destinationPath);
+        try {
+            if (!Files.exists(source)) {
+                LogsManager.error("Source directory does not exist at: " + sourcePath);
+                return;
+            }
+            Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                    Path targetDir = destination.resolve(source.relativize(dir));
+                    if (!Files.exists(targetDir)) {
+                        Files.createDirectories(targetDir);
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Path targetFile = destination.resolve(source.relativize(file));
+                    Files.copy(file, targetFile, StandardCopyOption.REPLACE_EXISTING);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+
+            LogsManager.info("Directory copied successfully from " + sourcePath + " to " + destinationPath);
+
+        } catch (Exception e) {
+            LogsManager.error("Failed to copy directory: " + e.getMessage());}
+}}
 //<?xml version="1.0" encoding="UTF-8"?>
 //<project xmlns="http://maven.apache.org/POM/4.0.0"
 //xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
