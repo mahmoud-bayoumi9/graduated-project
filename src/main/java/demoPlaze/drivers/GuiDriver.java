@@ -41,14 +41,14 @@ public class GuiDriver {
         switch ("edge") {
             case "edge":
                 io.github.bonigarcia.wdm.WebDriverManager.chromedriver().clearDriverCache().setup();
-                rawDriver = new ChromeDriver(options);
+                rawDriver = new ChromeDriver();
 //                rawDriver = new EdgeDriver();
                 break;
 //            case "firefox":
 //                rawDriver = new FirefoxDriver();
 //                break;
             default:
-                throw new IllegalArgumentException("❌ متصفح غير مدعوم: " );
+                throw new IllegalArgumentException("Driver is not Supported " );
         }
 
 

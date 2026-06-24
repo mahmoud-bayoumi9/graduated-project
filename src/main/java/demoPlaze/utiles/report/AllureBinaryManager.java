@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package demoPlaze.utiles.report;
 
 import demoPlaze.utiles.TerminalUtiles;
@@ -135,3 +136,5 @@ public static Path getExecutable() {
         }
     }
 }}
+=======
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9

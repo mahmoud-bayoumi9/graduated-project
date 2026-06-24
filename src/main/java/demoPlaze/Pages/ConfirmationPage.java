@@ -45,15 +45,7 @@ public class ConfirmationPage {
     public static final By continueButton=By.cssSelector("[data-qa='continue-button']");
 
 
-//public   ConfirmationPage choseTitle(String title){
-//    try {
-//        By titlee = By.xpath("//input[@value='" + title + "']");
-//        driver.action().click(titlee);
-//        return this;
-//    } catch (Exception e) {
-//        return this;
-//    }
-    public ConfirmationPage choseTitle(String title) {
+    public ConfirmationPage chooseTitle(String title) {
 
         By titleLocator = By.xpath("//input[@value='" + title + "']");
         WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(10));
@@ -66,7 +58,7 @@ public class ConfirmationPage {
     public ConfirmationPage fillRegisterForm(String title,
                                              String password,String day,String month,String years,String firstNmae,String lastName
           ,String comp,String address,String adress22,String countryy,String statee,String citty,String zip,String mobile){
-    choseTitle(title);
+    chooseTitle(title);
 
     driver.action().sendKey(Password,password);
     driver.action().dropDown(Days,day);

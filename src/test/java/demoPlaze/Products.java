@@ -17,12 +17,7 @@ import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnviro
 @Listeners(testNGListener.class)
 public class Products extends baseTest {
     @Test
-    @Tag("userDetails")
     @Description("User should Redirect to confirmation Page")
-//    @Issue("jjjjj")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Link("DDDDDDDD")
-    @Owner("Abanob")
 
     @BeforeSuite
     void setAllureEnvironment() {
@@ -43,6 +38,7 @@ public class Products extends baseTest {
     }
     @Test
     public  void VerifyUserCanAddProductToCartSuccessfully(){
+//        TC45
         new NavigationBar(driver).clickOnProductsButton();
         ProductsPage product=
         new ProductsPage(driver);
@@ -50,8 +46,19 @@ public class Products extends baseTest {
         product.verifyAddedBox("Added!");
         product.continueShopping();
     }
+
+    @Test
+    public  void VerifyUserCanRemoveProductFromCartSuccessfully(){
+//        TC64
+        new NavigationBar(driver).clickOnProductsButton();
+        ProductsPage product=
+                new ProductsPage(driver);
+        product.viewCart().deleteProduct();
+    }
+
     @Test
     public  void VerifySearchFunctionalityUsingTShirtKeyword(){
+//        TC47
         new NavigationBar(driver).clickOnProductsButton();
         ProductsPage product=
                 new ProductsPage(driver);
@@ -59,15 +66,10 @@ public class Products extends baseTest {
         product.searchButton();
         product.verifySearchProduct("Premium Polo T-Shirts");
     }
-    @Test
-    public  void VerifyUserCanRemoveProductFromCartSuccessfully(){
-        new NavigationBar(driver).clickOnProductsButton();
-        ProductsPage product=
-                new ProductsPage(driver);
-        product.viewCart().deleteProduct();
-    }
+
     @Test
     public  void  VerifyUserCanAddMultipleQuantitiesOfTheSameProductToCart(){
+//        TC48
         new NavigationBar(driver).clickOnProductsButton();
         ProductsPage product=
                 new ProductsPage(driver);

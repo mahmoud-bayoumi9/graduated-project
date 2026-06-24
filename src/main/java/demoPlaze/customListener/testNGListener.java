@@ -19,6 +19,7 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import java.io.File;
 
+import java.io.File;
 public class testNGListener implements ITestListener, IInvokedMethodListener, IExecutionListener {
 
     @Override
@@ -48,8 +49,13 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
 
     @Override
     public void onExecutionFinish() {
+<<<<<<< HEAD
         System.out.println("🏁 Test suite execution finished completely.");
         System.out.println("⏳ Waiting 2 seconds for TestNG to flush JSON results...");
+=======
+        System.out.println("Tests is Finished");
+        System.out.println("Waiting for saving file.JSON");
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
 
         try {
             Thread.sleep(2000);
@@ -57,6 +63,7 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
             Thread.currentThread().interrupt();
         }
 
+<<<<<<< HEAD
         // تسجيل الـ Shutdown Hook لتوليد التقارير قبل إغلاق الـ JVM بسلام
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
@@ -78,28 +85,41 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
                 System.err.println("[ShutdownHook] Error during Allure generation: " + e.getMessage());
             }
         }));
+=======
+        System.out.println("Generating HTML reports");
+
+        AllureReportGenerator.generateReport(true);
+
+        String finalReportName = AllureReportGenerator.renameReport();
+        AllureReportGenerator.openReport(finalReportName);
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
     }
 
     @Override
     public void onTestStart(ITestResult result) {
+<<<<<<< HEAD
         LogsManager.info("🚀 TestCase [" + result.getName() + "] is started");
+=======
+        LogsManager.info(" TestCase [" + result.getName() + "] is started");
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        LogsManager.info("🟢 TestCase [" + result.getName() + "] is passed");
+        LogsManager.info(" TestCase [" + result.getName() + "] is passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        LogsManager.info("❌ TestCase [" + result.getName() + "] is failed");
+        LogsManager.info(" TestCase [" + result.getName() + "] is failed");
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        LogsManager.info("🟡 TestCase [" + result.getName() + "] is skipped");
+        LogsManager.info(" TestCase [" + result.getName() + "] is skipped");
     }
 
+<<<<<<< HEAD
     @Override
     public void onStart(ITestContext context) {
         System.out.println("📂 [Tag <test>] Started Test Block: " + context.getName());
@@ -109,6 +129,8 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     public void onFinish(ITestContext context) {
         System.out.println("📁 [Tag <test>] Finished Test Block: " + context.getName());
     }
+=======
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {

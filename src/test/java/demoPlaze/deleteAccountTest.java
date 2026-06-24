@@ -14,14 +14,16 @@ import jdk.jfr.Description;
 import org.testng.annotations.*;
 
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
+<<<<<<< HEAD:src/test/java/demoPlaze/deleteAccountTest.java
 @Listeners(testNGListener.class)
 public class deleteAccountTest extends baseTest{
     @Test
+=======
+
+public class deleteAccount extends baseTest{
+    @Test(description= "User should Redirect to confirmation Page")
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9:src/test/java/demoPlaze/deleteAccount.java
     @Tag("userDetails")
-    @Description("User should Redirect to confirmation Page")
-//    @Issue("jjjjj")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Link("DDDDDDDD")
     @Owner("Abanob")
 
         @BeforeSuite
@@ -52,16 +54,17 @@ public class deleteAccountTest extends baseTest{
     @Description("User should able to delete account")
     @Test
     public void VerifyUserCanDeleteAccountSuccessfully(){
-//        new NavigationBar(driver).clickOndeleteAccountButton();
+//        TC41
         deleteAccountPage  delete= new deleteAccountPage(driver);
         delete.deleteAccount();
         delete.verifyVisibleDeletedParagraph();
-        System.out.println("ddd");
-
     }
+
+
     @Description("User should able to logout and login again successfully")
     @Test
     public void VerifyUserCanLogoutAndLoginAgainSuccessfully(){
+//            TC42
          NavigationBar navigate=
         new NavigationBar(driver);navigate.clickOnLogOutButton().EnterLoginEmail(conf.getEmail()).EnterLoginPassword(conf.getPassword()).clickLoginButton();
         navigate.verifyLoginAs(conf.getName());

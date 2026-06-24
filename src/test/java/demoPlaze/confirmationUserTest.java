@@ -36,11 +36,12 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user create acount with valid data")
     public void VerifyAccountCreationWithValidMandatorData(){
+//            TC11
            new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                    getAddress2(), conf.getCountry(),
                    conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
-        String actualUrl=driver.get().getCurrentUrl();
         driver.verfy().isvisiable( ConfirmationPage.continueButton);
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/account_created";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
 
@@ -48,11 +49,12 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user create acount without select title")
     public void ValidateAccountCreationWithoutSelectingTitle(){
+//            TC12
         new ConfirmationPage(driver).fillRegisterForm(" ",conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
-        String actualUrl=driver.get().getCurrentUrl();
         driver.verfy().isvisiable( ConfirmationPage.continueButton);
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/account_created";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
 
@@ -60,24 +62,25 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should not able to creat acount without password")
     public void ValidateAccountCreationWithoutPassword(){
+//            TC13
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),"", conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
 
         String PasswordValidation= new ConfirmationPage(driver).validationRegisterPasswordMessage();
         String expected=validationErrorMessage.requiredEmail;
-//        driver.verfy().isvisiable( ConfirmationPage.continueButton);
         driver.verfy().assertequal(PasswordValidation,expected,"actual is not Matched"+expected);
 
     }
     @Test
     @Step("user should be able to create account without birth date ")
     public void ValidateAccountCreationWithoutDateOfBirth(){
+//        TC14
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), "", "", "", conf.getFirstName(), conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
-        String actualUrl=driver.get().getCurrentUrl();
         driver.verfy().isvisiable( ConfirmationPage.continueButton);
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/account_created";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
 
@@ -85,24 +88,25 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should not able to creat acount without firstname")
     public void ValidateAccountCreationWithoutFirstName(){
+//        TC15
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), "", conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
 
         String PasswordValidation= new ConfirmationPage(driver).validationRegisterFirstnameMessage();
         String expected=validationErrorMessage.requiredEmail;
-//        driver.verfy().isvisiable( ConfirmationPage.continueButton);
         driver.verfy().assertequal(PasswordValidation,expected,"actual is not Matched"+expected);
 
     }
     @Test
     @Step("user should  able to creat acount with Arabic Characters In firstname")
     public void VerifyAccountCreationWithArabicCharactersInFirstName(){
+//        TC16
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), "ابانوب", conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
-        String actualUrl=driver.get().getCurrentUrl();
         driver.verfy().isvisiable( ConfirmationPage.continueButton);
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/account_created";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected) ;
 
@@ -110,11 +114,12 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should not able to creat acount with special Characters In firstname")
     public void VerifyAccountCreationWithSpecialCharactersInFirstName(){
+//        TC17
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName()+"@", conf.getLastName(), conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
-        String actualUrl=driver.get().getCurrentUrl();
         driver.verfy().isvisiable( ConfirmationPage.continueButton);
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/signup";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected) ;
 
@@ -122,12 +127,12 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should not able to creat acount without lastname")
     public void ValidateAccountCreationWithoutLastName(){
+//        TC18
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), "", conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
         String LastNameValidation= new ConfirmationPage(driver).validationRegisterLastnameMessage();
         String expected=validationErrorMessage.requiredEmail;
-//        driver.verfy().isvisiable( ConfirmationPage.continueButton);
         driver.verfy().assertequal(LastNameValidation,expected,"actual is not Matched"+expected);
 
     }
@@ -135,6 +140,7 @@ public class confirmationUserTest extends baseTest{
     @Test(enabled = false)
     @Step("user should  able to creat acount with Arabic Characters In lastname")
     public void VerifyAccountCreationWithArabicCharactersInLastName(){
+//        TC19
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), "ابانوب", conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
@@ -147,7 +153,8 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should not able to creat acount with special Characters In lasttname")
     public void VerifyAccountCreationWithSpecialCharactersInLastName(){
-        new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName()+"@", conf.getCompany(), conf.getAddress(), conf.
+//        TC20
+        new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName()+"@@@@", conf.getCompany(), conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
         String actualUrl=driver.get().getCurrentUrl();
@@ -159,6 +166,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  able to creat acount without CompanyName")
     public void VerifyAccountCreationWithoutCompanyName(){
+//        TC21
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),"", conf.getAddress(), conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
@@ -171,6 +179,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should not able to creat acount without address1")
     public void VerifyAccountCreationWithoutAddress1(){
+//        TC22
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), "", conf.
                         getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
@@ -183,6 +192,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  able to creat acount without address linr 2")
     public void VerifyAccountCreationWithoutAddressLine2(){
+//        TC23
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                         "", conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
@@ -194,6 +204,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  not able to creat acount without address state")
     public void VerifyAccountCreationWithoutState(){
+//        TC24
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                 conf.getAddress2(), conf.getCountry(),
                 "",conf.getCity(), conf.getZipCode(), conf.getMobile()).clickCreate();
@@ -206,6 +217,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  not able to creat acount without address state")
     public void VerifyAccountCreationWithoutCity(){
+//        TC25
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                 conf.getAddress2(), conf.getCountry(),
                 conf.getState(),"", conf.getZipCode(), conf.getMobile()).clickCreate();
@@ -218,6 +230,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  not able to creat acount without Zip Code")
     public void VerifyAccountCreationWithoutZipCode(){
+//        TC26
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                 conf.getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), "", conf.getMobile()).clickCreate();
@@ -230,6 +243,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  not able to creat acount without mobile number")
     public void VerifyAccountCreationWithoutMobileNumber(){
+//        TC27
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                 conf.getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), "").clickCreate();
@@ -242,6 +256,7 @@ public class confirmationUserTest extends baseTest{
     @Test
     @Step("user should  not able to creat acount with mobile number with characters")
     public void VerifyMobileNumberFieldAcceptsAlphabeticCharacters(){
+//        TC28 Failed
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                 conf.getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), "dddf33f").clickCreate();
@@ -250,20 +265,11 @@ public class confirmationUserTest extends baseTest{
         String expected="https://automationexercise.com/login";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected) ;
     }
-    @Test
-    @Step("user should  not able to creat acount with mobile number with spaces between digits")
-    public void VerifyMobilenumberFieldAcceptsSpacesBetweenDigits(){
-        new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
-                conf.getAddress2(), conf.getCountry(),
-                conf.getState(),conf.getCity(), conf.getZipCode(), "  011  33   43").clickCreate();
-        String actualUrl=driver.get().getCurrentUrl();
-        driver.verfy().isvisiable( ConfirmationPage.continueButton);
-        String expected="https://automationexercise.com/login";
-        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected) ;
-    }
+
     @Test
     @Step("user should  not able to creat acount with mobile number with special characters")
     public void VerifyMobilenumberFieldAcceptsSpecialCharacters(){
+//        TC29 Failed
         new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
                 conf.getAddress2(), conf.getCountry(),
                 conf.getState(),conf.getCity(), conf.getZipCode(), "  011#33@43").clickCreate();
@@ -272,6 +278,22 @@ public class confirmationUserTest extends baseTest{
         String expected="https://automationexercise.com/login";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected) ;
     }
+
+
+    @Test
+    @Step("user should  not able to creat acount with mobile number with spaces between digits")
+    public void VerifyMobilenumberFieldAcceptsSpacesBetweenDigits(){
+//        TC30 Failed
+        new ConfirmationPage(driver).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(),
+                conf.getState(),conf.getCity(), conf.getZipCode(), "  011  33   43").clickCreate();
+        String actualUrl=driver.get().getCurrentUrl();
+        driver.verfy().isvisiable( ConfirmationPage.continueButton);
+        String expected="https://automationexercise.com/login";
+        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected) ;
+    }
+
+
 
     @AfterMethod
     public void tearDown() {

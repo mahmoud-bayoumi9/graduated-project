@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
 package demoPlaze.utiles.report;
 
 import demoPlaze.FileUtiles;
@@ -21,9 +25,30 @@ import static demoPlaze.utiles.report.AllureConstant.RESULT_HISTORY_FOLDER;
 public class AllureReportGenerator {
     public static void generateReports(boolean isSingleFile) {
         Path outputFolder = isSingleFile ? AllureConstant.REPORT_PATH : AllureConstant.FULL_REPORT_PATH;
+<<<<<<< HEAD
+=======
+
+        String absoluteResultsPath = AllureConstant.RESULT_FOLDER.toAbsolutePath().toString();
+        String absoluteOutputPath = outputFolder.toAbsolutePath().toString();
+
+        System.out.println("📂 Result Folder (Absolute): " + absoluteResultsPath);
+        System.out.println("📂 Output Folder (Absolute): " + absoluteOutputPath);
+
+        List<String> commandList = new ArrayList<>();
+        commandList.add("cmd.exe");
+        commandList.add("/c");
+        commandList.add("allure");
+        commandList.add("serve");
+        commandList.add(absoluteResultsPath);
+        if (isSingleFile) {
+            commandList.add("--single-file");
+        }
+
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
         try {
             String allureExecutable = AllureBinaryManager.getExecutable().toAbsolutePath().toString();
 
+<<<<<<< HEAD
             List<String> command = new ArrayList<>(List.of(
                     "cmd.exe", "/c", allureExecutable, "generate",
                     AllureConstant.RESULT_FOLDER.toAbsolutePath().toString(),
@@ -51,6 +76,26 @@ public class AllureReportGenerator {
             builder.start();
         } catch (Exception e) {
             System.err.println("Open Report Failed: " + e.getMessage());
+=======
+            processBuilder.environment().put("JAVA_HOME", "D:\\Java\\jdk-26");
+            processBuilder.inheritIO();
+
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+
+        } catch (Exception e) {
+            System.err.println("Error is happened " + e.getMessage());
+        }
+    }
+
+    public static void openReport(String reportFileName) {
+
+        Path reportPath = AllureConstant.REPORT_PATH.resolve(reportFileName);
+        switch (osutiles.getCurrentOs()) {
+            case WINDOWS -> TerminalUtiles.executeTerminalCommand("cmd.exe", "/c", "start", "", reportPath.toString());
+            case MAC, LINUX -> TerminalUtiles.executeTerminalCommand("open", reportPath.toString());
+            default -> LogsManager.error("Opening Allure Report Is Not supported");
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
         }
     }
 //    public  static void generateReports(boolean isSingleFile){
@@ -83,16 +128,31 @@ public class AllureReportGenerator {
 //
 //    }
 
+<<<<<<< HEAD
     public static String renameReport(){
         String newFileName=AllureConstant.REPORT_PREFIX+ timeManager.getTimestamp()+AllureConstant.REPORT_EXTENSION;
         FileUtiles.renameFile(AllureConstant.REPORT_PATH.resolve(AllureConstant.INDEX_HTML).toString(),newFileName);
+=======
+    public static String renameReport() {
+        String newFileName = AllureConstant.REPORT_PREFIX + timeManager.getTimestamp() + AllureConstant.REPORT_EXTENSION;
+        String sourceFile = AllureConstant.REPORT_PATH.resolve(AllureConstant.INDEX_HTML).toString();
+        FileUtiles.renameFile(sourceFile, newFileName);
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
         return newFileName;
     }
     public static void copyHistory(){
         try {
+<<<<<<< HEAD
             FileUtiles.copyDirectory(HISTORY_FOLDER.toString(),RESULT_HISTORY_FOLDER.toString());
         } catch (Exception e) {
             LogsManager.error(e.getMessage());
+=======
+            if (HISTORY_FOLDER.toFile().exists()) {
+                FileUtils.copyDirectory(HISTORY_FOLDER.toFile(), RESULT_HISTORY_FOLDER.toFile());
+            }
+        } catch (IOException e) {
+            LogsManager.error("Error " + e.getMessage());
+>>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
         }
     }
 }

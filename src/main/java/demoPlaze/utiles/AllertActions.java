@@ -43,7 +43,7 @@ public class AllertActions {
             }
         });
     }
-    public void senText(String text){
+    public void sendText(String text){
          this.waitManager.fluentWait().until(driver1 -> {
             try {
                 driver1.switchTo().alert().sendKeys(text);
