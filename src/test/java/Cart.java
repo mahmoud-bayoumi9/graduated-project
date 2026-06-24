@@ -3,18 +3,16 @@ import demoPlaze.Pages.CartPage;
 import demoPlaze.Pages.ProductsPage;
 import demoPlaze.Pages.commponent.NavigationBar;
 import demoPlaze.baseTest;
+import demoPlaze.customListener.testNGListener;
 import demoPlaze.drivers.GuiDriver;
 import fakergenerate.generateConfirmationUser;
 import io.qameta.allure.Owner;
 import io.qameta.allure.testng.Tag;
 import jdk.jfr.Description;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
-
+@Listeners(testNGListener.class)
 public class Cart extends baseTest {
     @Test
     @Tag("userDetails")

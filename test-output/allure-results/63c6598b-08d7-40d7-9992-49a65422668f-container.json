@@ -1,1 +1,0 @@
-{"uuid":"63c6598b-08d7-40d7-9992-49a65422668f","name":"demoPlaze.Register.tearDown","children":["d5048c6d-f347-49a4-91a6-45a8196ee260"],"description":"","befores":[],"afters":[{"name":"tearDown","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1780313991507,"stop":1780313993074}],"start":1780313991505,"stop":1780313993074}

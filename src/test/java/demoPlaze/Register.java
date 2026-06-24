@@ -3,6 +3,7 @@ package demoPlaze;
 import com.google.common.collect.ImmutableMap;
 import demoPlaze.Pages.SignupOrLogin;
 import demoPlaze.Pages.commponent.NavigationBar;
+import demoPlaze.customListener.testNGListener;
 import demoPlaze.drivers.GuiDriver;
 import demoPlaze.utiles.waitManager;
 import io.qameta.allure.*;
@@ -10,10 +11,7 @@ import io.qameta.allure.testng.Tag;
 import jdk.jfr.Description;
 import models.registerUser;
 import org.aspectj.lang.annotation.Before;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 @Test
@@ -23,6 +21,7 @@ import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnviro
 //    @Severity(SeverityLevel.CRITICAL)
 //    @Link("DDDDDDDD")
 @Owner("Abanob")
+@Listeners(testNGListener.class)
 public class Register extends baseTest {
     @BeforeSuite
     void setAllureEnvironment() {

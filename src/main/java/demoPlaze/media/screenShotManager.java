@@ -2,6 +2,7 @@ package demoPlaze.media;
 
 import demoPlaze.utiles.logs.LogsManager;
 import demoPlaze.utiles.logs.timeManager;
+import demoPlaze.utiles.report.AllureAttachment;
 import org.aspectj.util.FileUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -18,6 +19,7 @@ public class screenShotManager {
             File screenShoScr = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             File screenDestination=new File(screenPath+screenName +' ' + timeManager.getTimestamp()+".png");
             FileUtil.copyFile(screenShoScr,screenDestination);
+            AllureAttachment.attachmentScreenShots(screenName,screenDestination.getAbsolutePath());
         } catch (Exception e) {
             LogsManager.error(e.getMessage());
         }
