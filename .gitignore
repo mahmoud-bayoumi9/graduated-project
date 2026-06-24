@@ -11,6 +11,11 @@ buildNumber.properties
 .factorypath
 .kotlin
 
+# Test Automation Reports & Outputs (Allure and TestNG)
+test-output/
+allure-results/
+allure-report/
+
 ### IntelliJ IDEA ###
 .idea/
 *.iws
