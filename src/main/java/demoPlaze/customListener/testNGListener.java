@@ -19,6 +19,7 @@ import org.testng.ITestResult;
 
 import java.io.File;
 
+import java.io.File;
 public class testNGListener implements ITestListener, IInvokedMethodListener, IExecutionListener {
 
     @Override
@@ -37,55 +38,43 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
 
     @Override
     public void onExecutionFinish() {
-        System.out.println("🏁 انتهت الاختبارات تماماً.");
-        System.out.println("⏳ جاري الانتظار ثانيتين للتأكد من استقرار وحفظ ملفات الـ JSON بالكامل...");
+        System.out.println("Tests is Finished");
+        System.out.println("Waiting for saving file.JSON");
 
         try {
-            // مهلة أمان كافية ليغلق فريمورك TestNG ملفات النتائج بسلام
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
-        System.out.println("🚀 جاري إصدار وتوليد تقرير HTML التلقائي (Single File)...");
+        System.out.println("Generating HTML reports");
 
-        // استدعاء التوليد مرة واحدة فقط كـ Single File
         AllureReportGenerator.generateReport(true);
 
-        System.out.println("📝 جاري إعادة تسمية وفتح التقرير...");
         String finalReportName = AllureReportGenerator.renameReport();
         AllureReportGenerator.openReport(finalReportName);
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        LogsManager.info("🔴 TestCase [" + result.getName() + "] is started");
+        LogsManager.info(" TestCase [" + result.getName() + "] is started");
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        LogsManager.info("🟢 TestCase [" + result.getName() + "] is passed");
+        LogsManager.info(" TestCase [" + result.getName() + "] is passed");
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        LogsManager.info("❌ TestCase [" + result.getName() + "] is failed");
+        LogsManager.info(" TestCase [" + result.getName() + "] is failed");
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        LogsManager.info("🟡 TestCase [" + result.getName() + "] is skipped");
+        LogsManager.info(" TestCase [" + result.getName() + "] is skipped");
     }
 
-    @Override
-    public void onStart(ITestContext context) {
-        System.out.println("📂 [Tag <test>] بدأ تنفيذ الـ Test Block: " + context.getName());
-    }
-
-    @Override
-    public void onFinish(ITestContext context) {
-        System.out.println("📁 [Tag <test>] انتهى تنفيذ الـ Test Block: " + context.getName());
-    }
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
@@ -107,7 +96,6 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
                     case ITestResult.FAILURE -> screenShotManager.takeFullScreen(driver, "failed_" + testResult.getName());
                 }
             }
-            System.out.println("✨ [Method] تم الانتهاء من الميثود والتقاط الحالة لـ: " + method.getTestMethod().getMethodName());
         }
     }
 

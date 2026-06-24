@@ -58,11 +58,6 @@ public class NavigationBar {
         driver.action().click(LogoutButton);
         return new SignupOrLogin(driver);
     }
-    @Step("click On  TestCasePage Button")
-    public TestCasePage clickOnTestCasePageButton(){
-        driver.action().click(TestCases);
-        return new  TestCasePage(driver);
-    }
     @Step("click On  VideoTutorials Button")
     public VideoTutorialsPage clickOnVideoTutorialsPageButton(){
         driver.action().click(VideoTutorials);

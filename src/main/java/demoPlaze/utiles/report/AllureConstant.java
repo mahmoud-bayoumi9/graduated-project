@@ -4,17 +4,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class AllureConstant {
-    // المسار الرئيسي للمشروع ومجلد الـ User Home بدون تحويلات نصوص معقدة
     public static final Path USER_DIR = Paths.get(System.getProperty("user.dir"));
     public static final Path USER_HOME = Paths.get(System.getProperty("user.home"));
 
-    // تصحيح: إزالة File.separator تماماً لأن Paths.get تدمج الفواصل تلقائياً وبشكل صحيح تبعاً لنوع الويندوز/الماك
-    // تصحيح: تعديل الاسم إلى test-output (حروف صغيرة) ليتوافق مع المجلد القياسي
     public static final Path RESULT_FOLDER = USER_DIR.resolve("test-output").resolve("allure-results");
     public static final Path REPORT_PATH = USER_DIR.resolve("test-output").resolve("reports");
     public static final Path FULL_REPORT_PATH = USER_DIR.resolve("test-output").resolve("full-reports");
 
-    // بناء مسارات الـ History بناءً على المجلدات المصححة أعلاه
     public static final Path HISTORY_FOLDER = FULL_REPORT_PATH.resolve("history");
     public static final Path RESULT_HISTORY_FOLDER = RESULT_FOLDER.resolve("history");
 

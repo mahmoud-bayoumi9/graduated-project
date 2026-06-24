@@ -17,11 +17,7 @@ import org.testng.annotations.Test;
 
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 @Test
-@Tag("userDetails")
 @Description("User should Redirect to confirmation Page")
-//    @Issue("jjjjj")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Link("DDDDDDDD")
 @Owner("Abanob")
 public class Register extends baseTest {
     @BeforeSuite
@@ -39,15 +35,9 @@ public class Register extends baseTest {
     driver=new GuiDriver();
      new NavigationBar(driver).navigate();
 }
-    @Test
-    @Tag("userDetails")
     @Description("User should Redirect to confirmation Page")
-//    @Issue("jjjjj")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Link("DDDDDDDD")
-    @Owner("Abanob")
 public void RegisterWithValidData(){
-
+// TC01
         String email="abanob.soror@gmail.com";
         String name="Abanob";
     new SignupOrLogin(driver).signupOrLogin()
@@ -55,42 +45,50 @@ public void RegisterWithValidData(){
     String actualUrl=driver.get().getCurrentUrl();
     String expected="https://automationexercise.com/signup";
     driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
-}@Description("User should not able to register without name")
+}
+
+@Description("User should not able to register without name")
     public void ValidateSignupWitheEmptyNameField(){
-        new SignupOrLogin(driver).signupOrLogin()
+    // TC02
+    new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterEmail("abanob.soryor@gmail.com").clickRegisterButton();
-        String actualUrl=new SignupOrLogin(driver).validationNameMessage();
+        String actualMsg=new SignupOrLogin(driver).validationNameMessage();
         String expected=validationErrorMessage.requiredName;
-        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+        driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
+
     @Description("User should not able to register without Email")
     public void ValidateSignupWitheEmptyEmailField(){
+        // TC03
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").clickRegisterButton();
-        String actualUrl=new SignupOrLogin(driver).validationRegisterEmailMessage();
+        String actualMsg=new SignupOrLogin(driver).validationRegisterEmailMessage();
         String expected=validationErrorMessage.requiredEmail;
-        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+        driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
     @Description("User should not able to register with Invalid Email Formate")
     public void ValidateSignupWithInvalidEmaiLFormat(){
+        // TC04
         String email="abanob.sororgmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=new SignupOrLogin(driver).validationRegisterEmailMessage();
+        String actualMsg=new SignupOrLogin(driver).validationRegisterEmailMessage();
         String expected=validationErrorMessage.Emailvalidation(email);
-        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+        driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
     @Description("User should not able to register with Invalid Email Formate")
     public void ValidateSignupWithWithSpaceInEmail(){
+        // TC05
         String email="abanob.soror @gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=new SignupOrLogin(driver).validationRegisterEmailMessage();
+        String actualMsg=new SignupOrLogin(driver).validationRegisterEmailMessage();
         String expected="A part followed by '@' should not contain the symbol ' '.";
-        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+        driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
     @Description("User should able to register with Email contains numbers")
     public void VerifySignupAcceptsEmailContainingNumericValues(){
+//         TC06
         String email="abanob.soror2017@gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").EnterRegisterEmail(email).clickRegisterButton();
@@ -100,6 +98,7 @@ public void RegisterWithValidData(){
     }
     @Description("User should able to register with Email contains numbers")
     public void ValidateSignupWithSpacesOnInputInNameField(){
+//        TC07
         String email="abanob.soror2017@gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName(" ").EnterRegisterEmail(email).clickRegisterButton();
@@ -109,6 +108,7 @@ public void RegisterWithValidData(){
     }
     @Description("User should able to register with name contains numbers")
     public void VerifySignupWithNumericValuesInUsername(){
+//         TC08
         String email="abanob.soror@gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("Sorour123").EnterRegisterEmail(email).clickRegisterButton();
@@ -118,15 +118,17 @@ public void RegisterWithValidData(){
     }
     @Description("User should able to register with name contains Special characters")
     public void VerifySignupWithSpecialCharactersValuesInUsername(){
+//        TC09
         String email="abanob.soror@gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
-                .EnterRegisterName("Sorour@@").EnterRegisterEmail(email).clickRegisterButton();
+                .EnterRegisterName("@@@@@").EnterRegisterEmail(email).clickRegisterButton();
         String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/Login";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
     @Description("User should able to register with name contains Arabic characters")
     public void VerifySignupWithArabicCharactersValuesInUsername(){
+//        TC10
         String email="abanob.soror@gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("ابانوب").EnterRegisterEmail(email).clickRegisterButton();
@@ -136,6 +138,7 @@ public void RegisterWithValidData(){
     }
     @Description("User should able to subscription with valid email")
     public void VerifySuccessfulSubscriptionWithValidEmail(){
+//        TC37
         String email="abanob.soror@gmail.com";
         new SignupOrLogin(driver).signupOrLogin()
                 .SubscribeEmail(email).ClickSubscribe();
@@ -146,7 +149,7 @@ public void RegisterWithValidData(){
     }
     @Description("User should not able to subscription without valid email")
     public void ValidateSubscriptionWithEmptyEmailField(){
-
+//      TC38
         new SignupOrLogin(driver).signupOrLogin()
                 .ClickSubscribe();
         String expected=validationErrorMessage.requiredEmail;
@@ -156,7 +159,7 @@ public void RegisterWithValidData(){
     }
     @Description("User should not able to subscription with invalid email format")
     public void ValidateSubscriptionWithInvalidEmailFomat(){
-
+//   TC39
         new SignupOrLogin(driver).signupOrLogin().SubscribeEmail("ddd33")
                 .ClickSubscribe();
         String expected="Please include an '@' in the email address. 'ddd33' is missing an '@'.";
@@ -166,7 +169,7 @@ public void RegisterWithValidData(){
     }
     @Description("User should not able to register with registeredEmail")
     public void ValidateSignupusingAlreadyRegisteredEmailAddress(){
-
+//        TC40
         String email="abanob.soror@gmail.com";
         String name="Abanob";
        SignupOrLogin AuthPage= new SignupOrLogin(driver).signupOrLogin();
@@ -175,14 +178,14 @@ public void RegisterWithValidData(){
     }
     @Description("User should not able to login with incorrect password")
     public void ValidateLoginWithIncorrectPassword(){
-
+//        TC43
         String email="abanob.soror@gmail.com";
         SignupOrLogin AuthPage=new SignupOrLogin(driver);AuthPage.signupOrLogin().EnterLoginEmail("abanob.soror@gmail.com").EnterLoginPassword("23sedrf").clickLoginButton();
         AuthPage.verifyLoginError("Your email or password is incorrect!");
     }
     @Description("User should not able to login with incorrect email")
     public void ValidateLoginWithIncorrectEmailAddress(){
-
+//        TC44
         String email="abanob.soror@gmail.com";
         SignupOrLogin AuthPage=new SignupOrLogin(driver);AuthPage.signupOrLogin().EnterLoginEmail("abanob.mahmoud@gmail.com").EnterLoginPassword("01116871063").clickLoginButton();
         AuthPage.verifyLoginError("Your email or password is incorrect!");

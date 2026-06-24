@@ -18,12 +18,8 @@ import org.testng.annotations.Test;
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 public class deleteAccount extends baseTest{
-    @Test
+    @Test(description= "User should Redirect to confirmation Page")
     @Tag("userDetails")
-    @Description("User should Redirect to confirmation Page")
-//    @Issue("jjjjj")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Link("DDDDDDDD")
     @Owner("Abanob")
 
         @BeforeSuite
@@ -54,16 +50,17 @@ public class deleteAccount extends baseTest{
     @Description("User should able to delete account")
     @Test
     public void VerifyUserCanDeleteAccountSuccessfully(){
-//        new NavigationBar(driver).clickOndeleteAccountButton();
+//        TC41
         deleteAccountPage  delete= new deleteAccountPage(driver);
         delete.deleteAccount();
         delete.verifyVisibleDeletedParagraph();
-        System.out.println("ddd");
-
     }
+
+
     @Description("User should able to logout and login again successfully")
     @Test
     public void VerifyUserCanLogoutAndLoginAgainSuccessfully(){
+//            TC42
          NavigationBar navigate=
         new NavigationBar(driver);navigate.clickOnLogOutButton().EnterLoginEmail(conf.getEmail()).EnterLoginPassword(conf.getPassword()).clickLoginButton();
         navigate.verifyLoginAs(conf.getName());
