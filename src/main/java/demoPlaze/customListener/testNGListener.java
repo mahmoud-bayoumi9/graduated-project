@@ -1,4 +1,5 @@
 package demoPlaze.customListener;
+
 import demoPlaze.FileUtiles;
 import demoPlaze.drivers.webDriverProvider;
 import demoPlaze.media.screenShotManager;
@@ -24,22 +25,16 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     public void onExecutionStart() {
         try {
             LogsManager.info("🔴 Starting Test Execution Suite...");
-
-            // مسح وتنظيف المجلدات لتجنب تراكم الملفات القديمة
             FileUtils.deleteQuietly(new File(screenShotManager.screenPath));
             cleanTestOutPutDirectory();
-
-            // إعادة إنشاء المجلدات النظيفة
             createOutPutDirectory();
             LogsManager.info("🧹 Directories cleaned and recreated successfully.");
 
-            // تحضير الـ History لتقارير Allure
             System.out.println("⏳ Preparing Allure History...");
             AllureReportGenerator.copyHistory();
 
             propertyReader.loadProperties();
             AllureEnvironmentManager.setAllureEnvironment();
-
         } catch (Exception e) {
             LogsManager.error("Error during onExecutionStart: " + e.getMessage());
         }
@@ -47,29 +42,25 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
 
     @Override
     public void onExecutionFinish() {
-
         System.out.println("🏁 Test suite execution finished completely.");
         System.out.println("⏳ Waiting 2 seconds for TestNG to flush JSON results...");
-
-        System.out.println("Tests is Finished");
-        System.out.println("Waiting for saving file.JSON");
-
 
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 System.out.println("[ShutdownHook] Starting Allure Report generation process...");
                 AllureReportGenerator.copyHistory();
-                AllureReportGenerator.generateReport(false); // توليد المجلد الكامل
-                AllureReportGenerator.generateReport(true);  // توليد الـ Single File
+                AllureReportGenerator.generateReport(false); 
+                AllureReportGenerator.generateReport(true);  
                 String finalReportName = AllureReportGenerator.renameReport();
                 System.out.println("[ShutdownHook] Allure Report generated successfully as: " + finalReportName);
 
-                // حماية الـ CI/CD (GitHub Actions): لا تفتح التقرير أبدًا إذا كان الكود يعمل على السيرفر
+                // حماية جيت هاب إكسترا
                 if (System.getenv("GITHUB_ACTIONS") == null) {
                     System.out.println("[ShutdownHook] Local execution detected. Launching Allure Server...");
                     AllureReportGenerator.openReport();
@@ -81,18 +72,21 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
             }
         }));
 
-        System.out.println("Generating HTML reports");
+        System.out.println("Generating HTML reports...");
         AllureReportGenerator.generateReport(true);
-        String finalReportName = AllureReportGenerator.renameReport();
-        AllureReportGenerator.openReport();
+        AllureReportGenerator.renameReport();
 
+        // 🚀 تم تصليح الكارثة هنا: منع فتح السيرفر التفاعلي نهائياً لو شغالين على الـ CI/CD لضمان عدم الكراش
+        if (System.getenv("GITHUB_ACTIONS") == null) {
+            AllureReportGenerator.openReport();
+        } else {
+            System.out.println("CI/CD Environment: Skipping interactive openReport() to prevent build crash.");
+        }
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-
         LogsManager.info("🚀 TestCase [" + result.getName() + "] is started");
-        LogsManager.info(" TestCase [" + result.getName() + "] is started");
     }
 
     @Override
@@ -103,12 +97,26 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     @Override
     public void onTestFailure(ITestResult result) {
         LogsManager.info(" TestCase [" + result.getName() + "] is failed");
+        
+        // 🚀 أفضل وأأمن مكان لأخذ السكرين شوت لحظة الفشل فوراً قبل الـ TearDown وقبل قفل السيرفر
+        if (result.getInstance() instanceof webDriverProvider provider) {
+            WebDriver driver = provider.getWebDriver();
+            if (driver != null) {
+                try {
+                    screenShotManager.takeFullScreen(driver, "fail_" + result.getName());
+                    System.out.println("✨ [Listener] Captured Failure screenshot for: " + result.getName());
+                } catch (Exception e) {
+                    System.out.println("❌ Could not capture screenshot: " + e.getMessage());
+                }
+            }
+        }
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
         LogsManager.info(" TestCase [" + result.getName() + "] is skipped");
     }
+
     @Override
     public void onStart(ITestContext context) {
         System.out.println("📂 [Tag <test>] Started Test Block: " + context.getName());
@@ -120,27 +128,29 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     }
 
     @Override
-    public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-        // يمكن تركه فارغاً أو استخدامه لاحقاً
-    }
+    public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {}
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
         if (method.isTestMethod()) {
             validation.assertAll();
+            
+            // تم نقل الـ Failure screenshot لميثود onTestFailure الأصلية والآمنة
+            // ونبقي هنا فقط على الـ Success والـ Skip لو المتصفح لسه مفتوح وبحماية try/catch
             WebDriver driver = null;
-
             if (testResult.getInstance() instanceof webDriverProvider provider) {
                 driver = provider.getWebDriver();
             }
 
             if (driver != null) {
-                switch (testResult.getStatus()) {
-                    case ITestResult.SUCCESS -> screenShotManager.takeFullScreen(driver, "success_" + testResult.getName());
-                    case ITestResult.SKIP -> screenShotManager.takeFullScreen(driver, "skip_" + testResult.getName());
-                    case ITestResult.FAILURE -> screenShotManager.takeFullScreen(driver, "fail_" + testResult.getName());
+                try {
+                    switch (testResult.getStatus()) {
+                        case ITestResult.SUCCESS -> screenShotManager.takeFullScreen(driver, "success_" + testResult.getName());
+                        case ITestResult.SKIP -> screenShotManager.takeFullScreen(driver, "skip_" + testResult.getName());
+                    }
+                } catch (Exception e) {
+                    System.out.println("⚠️ Driver session already closed, skipping afterInvocation snapshot.");
                 }
-                System.out.println("✨ [Method] Captured screenshot for: " + method.getTestMethod().getMethodName());
             }
         }
     }
