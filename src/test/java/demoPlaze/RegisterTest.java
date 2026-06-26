@@ -18,7 +18,7 @@ import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnviro
 @Description("User should Redirect to confirmation Page")
 @Owner("Abanob")
 @Listeners(testNGListener.class)
-public class Register extends baseTest {
+public class RegisterTest extends baseTest {
     @BeforeSuite
     void setAllureEnvironment() {
         allureEnvironmentWriter(
