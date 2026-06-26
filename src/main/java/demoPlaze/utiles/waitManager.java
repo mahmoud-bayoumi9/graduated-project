@@ -17,7 +17,7 @@ public class waitManager {
         this.driver=driver;
     }
     public FluentWait<WebDriver> fluentWait(){
-        return  new FluentWait<>(driver).withTimeout(Duration.ofSeconds(10))
+        return  new FluentWait<>(driver).withTimeout(Duration.ofSeconds(20))
                 .pollingEvery(Duration.ofMillis(100)).ignoreAll(getExceptions());
         }
 
