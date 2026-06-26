@@ -10,8 +10,6 @@ import demoPlaze.validations.verification;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.support.ThreadGuard;
 
 import java.util.HashMap;
@@ -23,7 +21,7 @@ public class GuiDriver {
     public GuiDriver() {
         WebDriver rawDriver;
 
-        // 1. تجميع الإعدادات والـ Preferences الخاصة بالكروم
+        // 1. تجهيز إعدادات الكروم
         ChromeOptions chromeOptions = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("autofill.profile_enabled", false);
@@ -37,63 +35,35 @@ public class GuiDriver {
         chromeOptions.addArguments("--disable-notifications");
         chromeOptions.addArguments("--start-maximized");
 
-        // 🚀 السطر السحري لقراءة الـ Headless من جيت هاب Actions أو من الـ command line
+        // 🚀 تشغيل الـ Headless لو التيست شغال على جيت هاب (CI/CD)
         String headlessProp = System.getProperty("headless", "false");
-        if (Boolean.parseBoolean(headlessProp)) {
+        if (Boolean.parseBoolean(headlessProp) || System.getenv("GITHUB_ACTIONS") != null) {
             chromeOptions.addArguments("--headless=new");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
+            chromeOptions.addArguments("--window-size=1920,1080");
         }
 
-        // 2. قراءة نوع البراوزر (لو عايز تخليه يقرا ديناميكك بعدين، حالياً شغال كروم بناءً على كودك)
-        String browser = "chrome"; 
+        // 2. عمل الـ Setup والـ Initialization بالـ options مجبرة!
+        WebDriverManager.chromedriver().setup();
+        
+        // 👈 لاحظ إننا باصينا الـ chromeOptions جوه القوسين عشان الـ args متبقاش [] فاضية
+        rawDriver = new ChromeDriver(chromeOptions); 
 
-        switch (browser.toLowerCase()) {
-            case "chrome":
-                WebDriverManager.chromedriver().setup();
-                // 👈 هنا قمنا بتمرير الـ chromeOptions بعد تصليحها ليعمل الـ Headless Mode
-                rawDriver = new ChromeDriver(chromeOptions);
-                break;
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                EdgeOptions edgeOptions = new EdgeOptions();
-                if (Boolean.parseBoolean(headlessProp)) {
-                    edgeOptions.addArguments("--headless=new");
-                }
-                rawDriver = new EdgeDriver(edgeOptions);
-                break;
-            default:
-                throw new IllegalArgumentException("Driver is not Supported: " + browser);
-        }
-
-        // حماية الـ Driver للـ Parallel Testing
+        // حماية الـ Driver للتشغيل المتوازي (Parallel)
         WebDriver protectedDriver = ThreadGuard.protect(rawDriver);
         driverThreadLocal.set(protectedDriver);
     }
 
-    public Actions action(){
-        return new Actions(get());
-    }
-    public BrowserActions brows(){
-        return new BrowserActions(get());
-    }
-    public frameActions frameActions(){
-        return new frameActions(get());
-    }
-    public AllertActions allertActions(){
-        return new AllertActions(get());
-    }
-    public validation validation(){
-        return new validation(get());
-    }
-    public verification verfy(){
-        return new verification(get());
-    }
+    public Actions action(){ return new Actions(get()); }
+    public BrowserActions brows(){ return new BrowserActions(get()); }
+    public frameActions frameActions(){ return new frameActions(get()); }
+    public AllertActions allertActions(){ return new AllertActions(get()); }
+    public validation validation(){ return new validation(get()); }
+    public verification verfy(){ return new verification(get()); }
 
-    public WebDriver get() {
-        return driverThreadLocal.get();
-    }
+    public WebDriver get() { return driverThreadLocal.get(); }
 
     public void quit() {
         if (driverThreadLocal.get() != null) {
