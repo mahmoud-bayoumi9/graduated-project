@@ -15,7 +15,7 @@ import org.testng.annotations.*;
 
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 @Listeners(testNGListener.class)
-public class Products extends baseTest {
+public class ProductsTest extends baseTest {
     @Test
     @Description("User should Redirect to confirmation Page")
 
