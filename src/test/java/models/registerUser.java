@@ -16,8 +16,9 @@ public class registerUser {
     public void setEmail(String email) {
         this.email = email;
     }
-    public registerUser(String name, String email){
+    public registerUser (String name, String email){
         this.email=email;
         this.name=name;
+
     }
 }

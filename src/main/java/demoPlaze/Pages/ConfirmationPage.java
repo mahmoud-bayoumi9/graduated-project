@@ -47,10 +47,15 @@ public class ConfirmationPage {
 
     public ConfirmationPage chooseTitle(String title) {
 
-        By titleLocator = By.xpath("//input[@value='" + title + "']");
-        WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(10));
-        WebElement titleElement = wait.until(ExpectedConditions.elementToBeClickable(titleLocator));
-        titleElement.click();
+       if(title!=" "){
+           By titleLocator = By.xpath("//input[@value='" + title + "']");
+           WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofSeconds(10));
+           WebElement titleElement = wait.until(ExpectedConditions.elementToBeClickable(titleLocator));
+           titleElement.click();
+
+       }else {
+
+       }
 
         return this;
     }

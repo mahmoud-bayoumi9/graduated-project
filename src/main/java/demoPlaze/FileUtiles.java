@@ -52,7 +52,6 @@ public class FileUtiles {
             LogsManager.error(e.getMessage());
         }
     }
-<<<<<<< HEAD
     public static void copyDirectory(String sourcePath, String destinationPath) {
         Path source = Paths.get(USER_DIR + sourcePath);
         Path destination = Paths.get(USER_DIR + destinationPath);
@@ -204,6 +203,4 @@ public class FileUtiles {
 //        </dependency>
 //    </dependencies>
 //</project>
-=======
-}
->>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
+

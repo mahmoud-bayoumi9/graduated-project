@@ -7,6 +7,7 @@ import demoPlaze.Pages.commponent.NavigationBar;
 import demoPlaze.customListener.testNGListener;
 import demoPlaze.drivers.GuiDriver;
 import fakergenerate.generateConfirmationUser;
+import fakergenerate.generateRegisterUser;
 import io.qameta.allure.Step;
 import org.testng.annotations.*;
 
@@ -15,6 +16,7 @@ import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnviro
 public class confirmationUserTest extends baseTest{
 
     models.confirmationUser conf = generateConfirmationUser.returnedConfirmationUser();
+    models.registerUser user= generateRegisterUser.returnedRegisterUser();
     @AfterSuite
     void setAllureEnvironment() {
         allureEnvironmentWriter(
@@ -30,7 +32,7 @@ public class confirmationUserTest extends baseTest{
         driver=new GuiDriver();
         new NavigationBar(driver).navigate();
         new SignupOrLogin(driver).signupOrLogin()
-                .EnterRegisterName(conf.getName()).EnterRegisterEmail(conf.getEmail()).clickRegisterButton();
+                .EnterRegisterName(user.getName()).EnterRegisterEmail(user.getEmail()).clickRegisterButton();
 
     }
     @Test
@@ -136,8 +138,8 @@ public class confirmationUserTest extends baseTest{
         driver.verfy().assertequal(LastNameValidation,expected,"actual is not Matched"+expected);
 
     }
-    @AfterMethod
-    @Test(enabled = false)
+
+//    @Test(enabled = false)
     @Step("user should  able to creat acount with Arabic Characters In lastname")
     public void VerifyAccountCreationWithArabicCharactersInLastName(){
 //        TC19

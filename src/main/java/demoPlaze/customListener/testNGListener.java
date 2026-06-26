@@ -1,5 +1,4 @@
 package demoPlaze.customListener;
-
 import demoPlaze.FileUtiles;
 import demoPlaze.drivers.webDriverProvider;
 import demoPlaze.media.screenShotManager;
@@ -19,18 +18,17 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import java.io.File;
 
-import java.io.File;
 public class testNGListener implements ITestListener, IInvokedMethodListener, IExecutionListener {
 
     @Override
     public void onExecutionStart() {
         try {
             LogsManager.info("🔴 Starting Test Execution Suite...");
-            
+
             // مسح وتنظيف المجلدات لتجنب تراكم الملفات القديمة
             FileUtils.deleteQuietly(new File(screenShotManager.screenPath));
             cleanTestOutPutDirectory();
-            
+
             // إعادة إنشاء المجلدات النظيفة
             createOutPutDirectory();
             LogsManager.info("🧹 Directories cleaned and recreated successfully.");
@@ -41,7 +39,7 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
 
             propertyReader.loadProperties();
             AllureEnvironmentManager.setAllureEnvironment();
-            
+
         } catch (Exception e) {
             LogsManager.error("Error during onExecutionStart: " + e.getMessage());
         }
@@ -49,35 +47,32 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
 
     @Override
     public void onExecutionFinish() {
-<<<<<<< HEAD
+
         System.out.println("🏁 Test suite execution finished completely.");
         System.out.println("⏳ Waiting 2 seconds for TestNG to flush JSON results...");
-=======
+
         System.out.println("Tests is Finished");
         System.out.println("Waiting for saving file.JSON");
->>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
+
 
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-<<<<<<< HEAD
-        // تسجيل الـ Shutdown Hook لتوليد التقارير قبل إغلاق الـ JVM بسلام
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 System.out.println("[ShutdownHook] Starting Allure Report generation process...");
                 AllureReportGenerator.copyHistory();
-                AllureReportGenerator.generateReports(false); // توليد المجلد الكامل
-                AllureReportGenerator.generateReports(true);  // توليد الـ Single File
+                AllureReportGenerator.generateReport(false); // توليد المجلد الكامل
+                AllureReportGenerator.generateReport(true);  // توليد الـ Single File
                 String finalReportName = AllureReportGenerator.renameReport();
                 System.out.println("[ShutdownHook] Allure Report generated successfully as: " + finalReportName);
 
                 // حماية الـ CI/CD (GitHub Actions): لا تفتح التقرير أبدًا إذا كان الكود يعمل على السيرفر
                 if (System.getenv("GITHUB_ACTIONS") == null) {
                     System.out.println("[ShutdownHook] Local execution detected. Launching Allure Server...");
-                    AllureReportGenerator.openReport(); 
+                    AllureReportGenerator.openReport();
                 } else {
                     System.out.println("[ShutdownHook] CI/CD (GitHub Actions) detected. Skipping interactive server launch.");
                 }
@@ -85,23 +80,19 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
                 System.err.println("[ShutdownHook] Error during Allure generation: " + e.getMessage());
             }
         }));
-=======
+
         System.out.println("Generating HTML reports");
-
         AllureReportGenerator.generateReport(true);
-
         String finalReportName = AllureReportGenerator.renameReport();
-        AllureReportGenerator.openReport(finalReportName);
->>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
+        AllureReportGenerator.openReport();
+
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-<<<<<<< HEAD
+
         LogsManager.info("🚀 TestCase [" + result.getName() + "] is started");
-=======
         LogsManager.info(" TestCase [" + result.getName() + "] is started");
->>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
     }
 
     @Override
@@ -118,8 +109,6 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     public void onTestSkipped(ITestResult result) {
         LogsManager.info(" TestCase [" + result.getName() + "] is skipped");
     }
-
-<<<<<<< HEAD
     @Override
     public void onStart(ITestContext context) {
         System.out.println("📂 [Tag <test>] Started Test Block: " + context.getName());
@@ -129,8 +118,6 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     public void onFinish(ITestContext context) {
         System.out.println("📁 [Tag <test>] Finished Test Block: " + context.getName());
     }
-=======
->>>>>>> 5d6cdf008ee55d5d87a8e2f21ca53cb1101770e9
 
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
