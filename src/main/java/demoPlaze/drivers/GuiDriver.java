@@ -34,6 +34,7 @@ public class GuiDriver {
         chromeOptions.addArguments("--host-resolver-rules=MAP pagead2.googlesyndication.com 127.0.0.1, MAP googleads.g.doubleclick.net 127.0.0.1");
         chromeOptions.addArguments("--disable-notifications");
         chromeOptions.addArguments("--start-maximized");
+        chromeOptions.addArguments("--host-resolver-rules=MAP *googleadservices.com 127.0.0.1, MAP *googlesyndication.com 127.0.0.1, MAP *amazon-adsystem.com 127.0.0.1, MAP *google-analytics.com 127.0.0.1");
 
         // 🚀 تشغيل الـ Headless لو التيست شغال على جيت هاب (CI/CD)
         String headlessProp = System.getProperty("headless", "false");
