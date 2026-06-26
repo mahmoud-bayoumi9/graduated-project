@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-  steps:
+    steps: # تم تظبيط المحاذاة والمسافات هنا لتكون تابعة للـ job
     - name: Checkout code
       uses: actions/checkout@v4
 
