@@ -21,28 +21,33 @@
 //         return this;
 //     }
 // }
-import demoPlaze.baseTest;
-import demoPlaze.Pages.CartPage;
-import demoPlaze.Pages.commponent.NavigationBar;
-import org.testng.annotations.Test;
+package demoPlaze.Pages;
 
-public class Cart extends baseTest {
+import demoPlaze.drivers.GuiDriver;
+import demoPlaze.utiles.waitManager;
+import org.openqa.selenium.By;
 
-    @Test(description = "User should be able to delete product from Cart successfully")
-    public void VerifyDeleteProductFromCart() {
-        // 1️⃣ التنقل للموقع والضغط على زرار الكارت من الملاحة
-        new NavigationBar(driver)
-                .navigate()
-                .clickOnCartButton();
+public class CartPage {
+    private final GuiDriver driver;
 
-        // 2️⃣ 🎯 السطر 38 المصلح: إنشاء متغير منفصل تماماً للـ CartPage 
-        // بدلاً من إعادة التعيين على الـ driver الأساسي لحل الـ Compilation Error
-        CartPage cartPage = new CartPage(driver);
+    public CartPage(GuiDriver driver) {
+        this.driver = driver;
+    }
+
+    private final By deleteProductBtn = By.xpath("//a[@class='cart_quantity_delete']");
+
+    public CartPage deleteProduct() {
+        org.openqa.selenium.WebElement element = new waitManager(driver.get()).fluentWait()
+                .until(org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated(deleteProductBtn));
         
-        // 3️⃣ تنفيذ عملية حذف المنتج
-        cartPage.deleteProduct();
+        org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver.get();
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
         
-        // هنا تقدر تضيف الـ Assertions بتاعتك للتأكد إن الكارت بقى فاضي، كمثال:
-        // driver.verfy().assertequal(cartPage.isEmpty(), true, "Cart is not empty!");
+        new waitManager(driver.get()).fluentWait()
+                .until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(element));
+        
+        // 🚀 الضغطة الـ JavaScript الأضمن على الـ Pipeline
+        js.executeScript("arguments[0].click();", element); 
+        return this;
     }
 }
