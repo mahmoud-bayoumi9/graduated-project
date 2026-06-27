@@ -12,7 +12,7 @@ public class generateConfirmationUser {
 
         // 🎯 توليد البيانات العادية بالـ Faker
         conf.setName(faker.name().username());
-        conf.setEmail(faker.internet().emailAddress());
+        conf.setEmail("mahmoud" + System.currentTimeMillis() + "@test.com");
         conf.setPassword(faker.internet().password());
         conf.setTitle("Mr.");
         conf.setFirstName(faker.name().firstName());
