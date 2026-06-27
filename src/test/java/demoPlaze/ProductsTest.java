@@ -28,15 +28,14 @@ public class ProductsTest extends baseTest {
 
     @BeforeMethod
     public void setupPages(){
-        // 🚀 الـ إنقاذ السريع: تمرير getWebDriver() لضمان فتح المتصفح النشط حالياً
-        new NavigationBar(getWebDriver()).navigate();
+        new NavigationBar(driver).navigate();
     }
 
     @Test(priority = 1)
     @Description("Verify User Can Add Product To Cart Successfully")
     public void VerifyUserCanAddProductToCartSuccessfully(){
-        new NavigationBar(getWebDriver()).clickOnProductsButton();
-        ProductsPage product = new ProductsPage(getWebDriver());
+        new NavigationBar(driver).clickOnProductsButton();
+        ProductsPage product = new ProductsPage(driver);
         product.addProduct();
         product.verifyAddedBox("Added!");
         product.continueShopping();
@@ -45,16 +44,16 @@ public class ProductsTest extends baseTest {
     @Test(priority = 2)
     @Description("Verify User Can Remove Product From Cart Successfully")
     public void VerifyUserCanRemoveProductFromCartSuccessfully(){
-        new NavigationBar(getWebDriver()).clickOnProductsButton();
-        ProductsPage product = new ProductsPage(getWebDriver());
+        new NavigationBar(driver).clickOnProductsButton();
+        ProductsPage product = new ProductsPage(driver);
         product.viewCart().deleteProduct();
     }
 
     @Test(priority = 3)
     @Description("Verify Search Functionality Using TShirt Keyword")
-    public void VerifySearchFunctionalityUsingTShirtKeyword(){
-        new NavigationBar(getWebDriver()).clickOnProductsButton();
-        ProductsPage product = new ProductsPage(getWebDriver());
+    public void VerifySearchFunctionalityUsing TShirtKeyword(){
+        new NavigationBar(driver).clickOnProductsButton();
+        ProductsPage product = new ProductsPage(driver);
         product.search("T-Shirts");
         product.searchButton();
         product.verifySearchProduct("Premium Polo T-Shirts");
@@ -63,8 +62,8 @@ public class ProductsTest extends baseTest {
     @Test(priority = 4)
     @Description("Verify User Can Add Multiple Quantities Of The Same Product To Cart")
     public void VerifyUserCanAddMultipleQuantitiesOfTheSameProductToCart(){
-        new NavigationBar(getWebDriver()).clickOnProductsButton();
-        ProductsPage product = new ProductsPage(getWebDriver());
+        new NavigationBar(driver).clickOnProductsButton();
+        ProductsPage product = new ProductsPage(driver);
         product.productDetails().addQuantityOfSameProduct("4");
     }
 }
