@@ -9,7 +9,7 @@ import models.registerUser;
 import org.testng.annotations.*;
 
 @Listeners(testNGListener.class)
-public class RegisterTest extends baseTest { من فوق الكلاس
+public class RegisterTest extends baseTest { 
 
  @BeforeSuite
 void setAllureEnvironment() {
