@@ -40,13 +40,16 @@ public class baseTest implements webDriverProvider {
     //     }
     //     return driver.get();
     // }
-    @Override
-public WebDriver getWebDriver() {
-    if (driver == null) {
-        return null; // نرجع null بدل ما نفتح متصفح مشوه بره الـ BeforeMethod
+@Override
+    public WebDriver getWebDriver() {
+        // 🛑 الحماية القصوى: لو الـ driver طار أو لسه مجهزش، ارجع null فوراً
+        // ممنوع تماماً تعمل driver = new GuiDriver() هنا لأن ده اللي بيفتح متصفح أقرع (بدون args) وبيجيب إيرور 500
+        if (driver == null) {
+            System.out.println("[INFO] getWebDriver invoked but driver is null. Blocking session creation.");
+            return null; 
+        }
+        return driver.get();
     }
-    return driver.get();
-}
 
     @AfterMethod
     public void tearDown() {
