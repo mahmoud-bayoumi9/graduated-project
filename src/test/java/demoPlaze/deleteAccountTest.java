@@ -9,7 +9,7 @@ import demoPlaze.customListener.testNGListener;
 import fakergenerate.generateConfirmationUser;
 import io.qameta.allure.Owner;
 import io.qameta.allure.testng.Tag;
-import io.qameta.allure.Description; // ✅ تصحيح الـ Import لـ Allure
+import io.qameta.allure.Description;
 import org.testng.annotations.*;
 
 @Listeners(testNGListener.class)
@@ -30,15 +30,14 @@ public class deleteAccountTest extends baseTest {
 
     @BeforeMethod
     public void setup() {
-        // 🚀 بنعتمد على الـ Driver اللي بيتحضر تلقائياً وبأمان في الـ baseTest
-        new NavigationBar(getWebDriver()).navigate();
-        SignupOrLogin auth = new SignupOrLogin(getWebDriver());
+        new NavigationBar(driver).navigate();
+        SignupOrLogin auth = new SignupOrLogin(driver);
         auth.signupOrLogin()
                 .EnterRegisterName(conf.getName())
                 .EnterRegisterEmail(conf.getEmail())
                 .clickRegisterButton();
                 
-        new ConfirmationPage(getWebDriver()).fillRegisterForm(
+        new ConfirmationPage(driver).fillRegisterForm(
                 conf.getTitle(), conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), 
                 conf.getFirstName(), conf.getLastName(), conf.getCompany(), conf.getAddress(), 
                 conf.getAddress2(), conf.getCountry(), conf.getState(), conf.getCity(), 
@@ -50,7 +49,7 @@ public class deleteAccountTest extends baseTest {
     @Tag("userDetails")
     @Owner("Abanob")
     public void VerifyUserCanDeleteAccountSuccessfully() {
-        deleteAccountPage delete = new deleteAccountPage(getWebDriver());
+        deleteAccountPage delete = new deleteAccountPage(driver);
         delete.deleteAccount();
         delete.verifyVisibleDeletedParagraph();
     }
@@ -60,7 +59,7 @@ public class deleteAccountTest extends baseTest {
     @Tag("userDetails")
     @Owner("Abanob")
     public void VerifyUserCanLogoutAndLoginAgainSuccessfully() {
-        NavigationBar navigate = new NavigationBar(getWebDriver());
+        NavigationBar navigate = new NavigationBar(driver);
         navigate.clickOnLogOutButton()
                 .EnterLoginEmail(conf.getEmail())
                 .EnterLoginPassword(conf.getPassword())
