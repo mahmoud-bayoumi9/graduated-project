@@ -1,8 +1,8 @@
-// package demoPlaze.Pages;
+package demoPlaze.Pages;
 
-// import demoPlaze.drivers.GuiDriver;
-// import demoPlaze.utiles.waitManager;
-// import org.openqa.selenium.By;
+import demoPlaze.drivers.GuiDriver;
+import demoPlaze.utiles.waitManager;
+import org.openqa.selenium.By;
 
 // public class CartPage {
 //     private final GuiDriver driver;
@@ -21,11 +21,11 @@
 //         return this;
 //     }
 // }
-package demoPlaze.Pages;
+// package demoPlaze.Pages;
 
-import demoPlaze.drivers.GuiDriver;
-import demoPlaze.utiles.waitManager;
-import org.openqa.selenium.By;
+// import demoPlaze.drivers.GuiDriver;
+// import demoPlaze.utiles.waitManager;
+// import org.openqa.selenium.By;
 
 public class CartPage {
     private final GuiDriver driver;
