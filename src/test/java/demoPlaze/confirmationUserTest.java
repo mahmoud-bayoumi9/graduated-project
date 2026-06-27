@@ -186,3 +186,68 @@ public class confirmationUserTest extends baseTest {
         String PasswordValidation= new ConfirmationPage(getWebDriver()).validationRegisterStateMessage();
         String expected=validationErrorMessage.requiredEmail;
         driver.verfy().assertequal(PasswordValidation,expected,"actual is not Matched"+expected);
+    }
+
+    @Test(priority = 15)
+    @Step("user should not able to creat acount without address city")
+    public void VerifyAccountCreationWithoutCity(){
+        new ConfirmationPage(getWebDriver()).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(), conf.getState(),"", conf.getZipCode(), conf.getMobile()).clickCreate();
+        String CityValidation= new ConfirmationPage(getWebDriver()).validationRegisterCityMessage();
+        String expected=validationErrorMessage.requiredEmail;
+        driver.verfy().assertequal(CityValidation,expected,"actual is not Matched"+expected);
+    }
+
+    @Test(priority = 16)
+    @Step("user should not able to creat acount without Zip Code")
+    public void VerifyAccountCreationWithoutZipCode(){
+        new ConfirmationPage(getWebDriver()).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(), conf.getState(),conf.getCity(), "", conf.getMobile()).clickCreate();
+        String CityValidation= new ConfirmationPage(getWebDriver()).validationRegisterZipCodeMessage();
+        String expected=validationErrorMessage.requiredEmail;
+        driver.verfy().assertequal(CityValidation,expected,"actual is not Matched"+expected);
+    }
+
+    @Test(priority = 17)
+    @Step("user should not able to creat acount without mobile number")
+    public void VerifyAccountCreationWithoutMobileNumber(){
+        new ConfirmationPage(getWebDriver()).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(), conf.getState(),conf.getCity(), conf.getZipCode(), "").clickCreate();
+        String CityValidation= new ConfirmationPage(getWebDriver()).validationRegisterMobileNumberMessage();
+        String expected=validationErrorMessage.requiredEmail;
+        driver.verfy().assertequal(CityValidation,expected,"actual is not Matched"+expected);
+    }
+
+    @Test(priority = 18)
+    @Step("user should not able to creat acount with mobile number with characters")
+    public void VerifyMobileNumberFieldAcceptsAlphabeticCharacters(){
+        new ConfirmationPage(getWebDriver()).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(), conf.getState(),conf.getCity(), conf.getZipCode(), "dddf33f").clickCreate();
+        driver.verfy().isvisiable(ConfirmationPage.continueButton);
+        String actualUrl=getWebDriver().getCurrentUrl();
+        String expected="https://automationexercise.com/login";
+        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+    }
+
+    @Test(priority = 19)
+    @Step("user should not able to creat acount with mobile number with special characters")
+    public void VerifyMobilenumberFieldAcceptsSpecialCharacters(){
+        new ConfirmationPage(getWebDriver()).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(), conf.getState(),conf.getCity(), conf.getZipCode(), "  011#33@43").clickCreate();
+        driver.verfy().isvisiable(ConfirmationPage.continueButton);
+        String actualUrl=getWebDriver().getCurrentUrl();
+        String expected="https://automationexercise.com/login";
+        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+    }
+
+    @Test(priority = 20)
+    @Step("user should not able to creat acount with mobile number with spaces between digits")
+    public void VerifyMobilenumberFieldAcceptsSpacesBetweenDigits(){
+        new ConfirmationPage(getWebDriver()).fillRegisterForm(conf.getTitle(),conf.getPassword(), conf.getDay(), conf.getMonth(), conf.getYear(), conf.getFirstName(), conf.getLastName(),conf.getCompany(), conf.getAddress(),
+                conf.getAddress2(), conf.getCountry(), conf.getState(),conf.getCity(), conf.getZipCode(), "  011  33   43").clickCreate();
+        driver.verfy().isvisiable(ConfirmationPage.continueButton);
+        String actualUrl=getWebDriver().getCurrentUrl();
+        String expected="https://automationexercise.com/login";
+        driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
+    }
+}
