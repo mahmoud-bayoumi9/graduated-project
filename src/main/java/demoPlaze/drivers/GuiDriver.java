@@ -39,7 +39,7 @@ public class GuiDriver {
         // 🚀 تشغيل الـ Headless لو التيست شغال على جيت هاب (CI/CD)
         String headlessProp = System.getProperty("headless", "false");
         if (Boolean.parseBoolean(headlessProp) || System.getenv("GITHUB_ACTIONS") != null) {
-            chromeOptions.addArguments("--headless=new");
+            // chromeOptions.addArguments("--headless=new");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
