@@ -24,8 +24,7 @@ public class RegisterTest extends baseTest {
 
     @BeforeMethod
     public void setupPages(){
-        // 🚀 الحل هنا: نمرر getWebDriver() لضمان إرسال المتصفح الشغال والنشط حالياً
-        new NavigationBar(getWebDriver()).navigate();
+        new NavigationBar(driver).navigate();
     }
 
     @Test(priority = 1)
@@ -33,9 +32,9 @@ public class RegisterTest extends baseTest {
     public void RegisterWithValidData(){
         String email="abanob.soror@gmail.com";
         String name="Abanob";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName(name).EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=getWebDriver().getCurrentUrl();
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/signup";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
@@ -43,9 +42,9 @@ public class RegisterTest extends baseTest {
     @Test(priority = 2)
     @Description("User should not able to register without name")
     public void ValidateSignupWitheEmptyNameField(){
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterEmail("abanob.soryor@gmail.com").clickRegisterButton();
-        String actualMsg=new SignupOrLogin(getWebDriver()).validationNameMessage();
+        String actualMsg=new SignupOrLogin(driver).validationNameMessage();
         String expected=validationErrorMessage.requiredName;
         driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
@@ -53,9 +52,9 @@ public class RegisterTest extends baseTest {
     @Test(priority = 3)
     @Description("User should not able to register without Email")
     public void ValidateSignupWitheEmptyEmailField(){
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").clickRegisterButton();
-        String actualMsg=new SignupOrLogin(getWebDriver()).validationRegisterEmailMessage();
+        String actualMsg=new SignupOrLogin(driver).validationRegisterEmailMessage();
         String expected=validationErrorMessage.requiredEmail;
         driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
@@ -64,9 +63,9 @@ public class RegisterTest extends baseTest {
     @Description("User should not able to register with Invalid Email Formate")
     public void ValidateSignupWithInvalidEmaiLFormat(){
         String email="abanob.sororgmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").EnterRegisterEmail(email).clickRegisterButton();
-        String actualMsg=new SignupOrLogin(getWebDriver()).validationRegisterEmailMessage();
+        String actualMsg=new SignupOrLogin(driver).validationRegisterEmailMessage();
         String expected=validationErrorMessage.Emailvalidation(email);
         driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
@@ -75,9 +74,9 @@ public class RegisterTest extends baseTest {
     @Description("User should not able to register with Invalid Email Formate")
     public void ValidateSignupWithWithSpaceInEmail(){
         String email="abanob.soror @gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").EnterRegisterEmail(email).clickRegisterButton();
-        String actualMsg=new SignupOrLogin(getWebDriver()).validationRegisterEmailMessage();
+        String actualMsg=new SignupOrLogin(driver).validationRegisterEmailMessage();
         String expected="A part followed by '@' should not contain the symbol ' '.";
         driver.verfy().assertequal(actualMsg,expected,"actual is not Matched"+expected);
     }
@@ -86,9 +85,9 @@ public class RegisterTest extends baseTest {
     @Description("User should able to register with Email contains numbers")
     public void VerifySignupAcceptsEmailContainingNumericValues(){
         String email="abanob.soror2017@gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("abanob").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=getWebDriver().getCurrentUrl();
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/signup";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
@@ -97,9 +96,9 @@ public class RegisterTest extends baseTest {
     @Description("User should able to register with Email contains numbers")
     public void ValidateSignupWithSpacesOnInputInNameField(){
         String email="abanob.soror2017@gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName(" ").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=getWebDriver().getCurrentUrl();
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/Login";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
@@ -108,9 +107,9 @@ public class RegisterTest extends baseTest {
     @Description("User should able to register with name contains numbers")
     public void VerifySignupWithNumericValuesInUsername(){
         String email="abanob.soror@gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("Sorour123").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=getWebDriver().getCurrentUrl();
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/signup";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
@@ -119,9 +118,9 @@ public class RegisterTest extends baseTest {
     @Description("User should able to register with name contains Special characters")
     public void VerifySignupWithSpecialCharactersValuesInUsername(){
         String email="abanob.soror@gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("@@@@@").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=getWebDriver().getCurrentUrl();
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/Login";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
@@ -130,9 +129,9 @@ public class RegisterTest extends baseTest {
     @Description("User should able to register with name contains Arabic characters")
     public void VerifySignupWithArabicCharactersValuesInUsername(){
         String email="abanob.soror@gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .EnterRegisterName("ابانوب").EnterRegisterEmail(email).clickRegisterButton();
-        String actualUrl=getWebDriver().getCurrentUrl();
+        String actualUrl=driver.get().getCurrentUrl();
         String expected="https://automationexercise.com/signup";
         driver.verfy().assertequal(actualUrl,expected,"actual is not Matched"+expected);
     }
@@ -141,9 +140,9 @@ public class RegisterTest extends baseTest {
     @Description("User should able to subscription with valid email")
     public void VerifySuccessfulSubscriptionWithValidEmail(){
         String email="abanob.soror@gmail.com";
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .SubscribeEmail(email).ClickSubscribe();
-        String actualMessage=new SignupOrLogin(getWebDriver()).validationSubscriptionValidEmMessage();
+        String actualMessage=new SignupOrLogin(driver).validationSubscriptionValidEmMessage();
         String expected="You have been successfully subscribed!";
         driver.verfy().assertequal(actualMessage,expected,"not matched");
     }
@@ -151,20 +150,20 @@ public class RegisterTest extends baseTest {
     @Test(priority = 12)
     @Description("User should not able to subscription without valid email")
     public void ValidateSubscriptionWithEmptyEmailField(){
-        new SignupOrLogin(getWebDriver()).signupOrLogin()
+        new SignupOrLogin(driver).signupOrLogin()
                 .ClickSubscribe();
         String expected=validationErrorMessage.requiredEmail;
-        String actualMessage=new SignupOrLogin(getWebDriver()).validationSubscriptionInvalidEmailMessage();
+        String actualMessage=new SignupOrLogin(driver).validationSubscriptionInvalidEmailMessage();
         driver.verfy().assertequal(actualMessage,expected,"not matched");
     }
 
     @Test(priority = 13)
     @Description("User should not able to subscription with invalid email format")
     public void ValidateSubscriptionWithInvalidEmailFomat(){
-        new SignupOrLogin(getWebDriver()).signupOrLogin().SubscribeEmail("ddd33")
+        new SignupOrLogin(driver).signupOrLogin().SubscribeEmail("ddd33")
                 .ClickSubscribe();
         String expected="Please include an '@' in the email address. 'ddd33' is missing an '@'.";
-        String actualMessage=new SignupOrLogin(getWebDriver()).validationSubscriptionInvalidEmailMessage();
+        String actualMessage=new SignupOrLogin(driver).validationSubscriptionInvalidEmailMessage();
         driver.verfy().assertequal(actualMessage,expected,"not matched");
     }
 
@@ -173,7 +172,7 @@ public class RegisterTest extends baseTest {
     public void ValidateSignupusingAlreadyRegisteredEmailAddress(){
         String email="abanob.soror@gmail.com";
         String name="Abanob";
-        SignupOrLogin AuthPage= new SignupOrLogin(getWebDriver()).signupOrLogin();
+        SignupOrLogin AuthPage= new SignupOrLogin(driver).signupOrLogin();
         AuthPage.EnterRegisterName(name).EnterRegisterEmail(email).clickRegisterButton();
         AuthPage.verifyRegisterEmail("Email Address already exist!");
     }
@@ -181,7 +180,7 @@ public class RegisterTest extends baseTest {
     @Test(priority = 15)
     @Description("User should not able to login with incorrect password")
     public void ValidateLoginWithIncorrectPassword(){
-        SignupOrLogin AuthPage=new SignupOrLogin(getWebDriver());
+        SignupOrLogin AuthPage=new SignupOrLogin(driver);
         AuthPage.signupOrLogin().EnterLoginEmail("abanob.soror@gmail.com").EnterLoginPassword("23sedrf").clickLoginButton();
         AuthPage.verifyLoginError("Your email or password is incorrect!");
     }
@@ -189,7 +188,7 @@ public class RegisterTest extends baseTest {
     @Test(priority = 16)
     @Description("User should not able to login with incorrect email")
     public void ValidateLoginWithIncorrectEmailAddress(){
-        SignupOrLogin AuthPage=new SignupOrLogin(getWebDriver());
+        SignupOrLogin AuthPage=new SignupOrLogin(driver);
         AuthPage.signupOrLogin().EnterLoginEmail("abanob.mahmoud@gmail.com").EnterLoginPassword("01116871063").clickLoginButton();
         AuthPage.verifyLoginError("Your email or password is incorrect!");
     }
