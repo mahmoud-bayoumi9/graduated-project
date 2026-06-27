@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: windows-latest # 👈 شغالين على ويندوز دلوقتي
+    runs-on: ubuntu-latest # 👈 رجعناه Linux عشان الـ Allure Container يشتغل بدون أخطاء
 
     steps:
     - name: Checkout code
@@ -27,8 +27,8 @@ jobs:
         cache: 'maven'
 
     - name: Run Selenium Tests
-      shell: cmd # 👈 حددنا الـ shell يكون cmd عشان يفهم الـ فلاج صح
-      run: mvn test "-Dmaven.test.failure.ignore=true" # 👈 حطينا علامات تنصيص هنا
+      # 👈 شيلنا الـ shell: cmd والـ علامات التنصيص لأننا رجعنا لبيئة الـ Linux العادية
+      run: mvn test -Dmaven.test.failure.ignore=true
 
     # 🚀 خطوة 1: جلب تاريخ التقارير القديمة
     - name: Get Allure history
