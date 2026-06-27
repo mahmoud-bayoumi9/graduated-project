@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: windows-latest # 👈 تم التغيير هنا من ubuntu-latest لـ windows-latest
+    runs-on: windows-latest # 👈 شغالين على ويندوز دلوقتي
 
     steps:
     - name: Checkout code
@@ -27,8 +27,8 @@ jobs:
         cache: 'maven'
 
     - name: Run Selenium Tests
-      # 👈 تم تعديل السطر اللي تحت: شيلنا -Dheadless=true وخليناه يرن عادي
-      run: mvn test -Dmaven.test.failure.ignore=true
+      shell: cmd # 👈 حددنا الـ shell يكون cmd عشان يفهم الـ فلاج صح
+      run: mvn test "-Dmaven.test.failure.ignore=true" # 👈 حطينا علامات تنصيص هنا
 
     # 🚀 خطوة 1: جلب تاريخ التقارير القديمة
     - name: Get Allure history
