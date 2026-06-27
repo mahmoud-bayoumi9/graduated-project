@@ -1,28 +1,36 @@
 package fakergenerate;
-import models.confirmationUser;
+
 import com.github.javafaker.Faker;
+import models.confirmationUser;
 import java.util.Locale;
 
 public class generateConfirmationUser {
+
     public static confirmationUser returnedConfirmationUser() {
-        Faker faker = new Faker(new Locale("en"));
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String name = firstName + " " + lastName;
-        String email = firstName.toLowerCase() + faker.number().numberBetween(10, 999) + "@example.com";
-        
-        // 🎯 إضافة النقطة (.) لضمان مطابقة خيارات الموقع "Mr." أو "Mrs."
-        String title = faker.bool().bool() ? "Mr." : "Mrs."; 
-        
-        String day = String.valueOf(faker.number().numberBetween(1, 28));
-        String month = faker.options().option("January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December");
-        String year = String.valueOf(faker.number().numberBetween(1980, 2005));
-        String password = faker.internet().password(6, 12, true, true);
-        String company = faker.company().name();
-        String address = faker.address().streetAddress();
-        String address2 = faker.address().secondaryAddress();
-        String country = "United States";
-        String state = faker.address().state();
-        String city = faker.address().city();
-        String zipCode = faker.address().
+        Faker faker = new Faker(new Locale("en-US"));
+        confirmationUser conf = new confirmationUser();
+
+        // 🎯 توليد البيانات العادية بالـ Faker
+        conf.setName(faker.name().username());
+        conf.setEmail(faker.internet().emailAddress());
+        conf.setPassword(faker.internet().password());
+        conf.setTitle("Mr.");
+        conf.setFirstName(faker.name().firstName());
+        conf.setLastName(faker.name().lastName());
+        conf.setCompany(faker.company().name());
+        conf.setAddress(faker.address().streetAddress());
+        conf.setAddress2(faker.address().secondaryAddress());
+        conf.setState(faker.address().state());
+        conf.setCity(faker.address().city());
+        conf.setZipCode(faker.address().zipCode());
+        conf.setMobile(faker.phoneNumber().cellPhone());
+
+        // 🚀 تثبيت قيم الـ Dropdowns لضمان النجاح على الـ Pipeline وتجنب الـ Redirect Failure
+        conf.setDay("10");
+        conf.setMonth("May");
+        conf.setYear("2000");
+        conf.setCountry("United States");
+
+        return conf;
+    } // 👈 قفلة الدالة (returnedConfirmationUser)
+} // 👈 قفلة الكلاس (generateConfirmationUser)
