@@ -10,7 +10,7 @@ import fakergenerate.generateRegisterUser;
 import io.qameta.allure.Step;
 import org.testng.annotations.*;
 
-import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
+// import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 @Listeners(testNGListener.class)
 public class confirmationUserTest extends baseTest {
@@ -18,16 +18,17 @@ public class confirmationUserTest extends baseTest {
     private models.confirmationUser conf;
     private models.registerUser user;
 
-    @BeforeSuite
-    void setAllureEnvironment() {
-        allureEnvironmentWriter(
-                ImmutableMap.<String, String>builder()
-                        .put("Browser", "Chrome")
-                        .put("Browser.Version", "70.0.3538.77")
-                        .put("os", System.getProperty("os.name"))
-                        .put("URL", "http://testjs.site88.net")
-                        .build());
-    }
+@BeforeSuite
+void setAllureEnvironment() {
+  
+    com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter(
+            com.google.common.collect.ImmutableMap.<String, String>builder()
+                    .put("Browser", "Chrome")
+                    .put("Browser.Version", "70.0.3538.77")
+                    .put("os", System.getProperty("os.name"))
+                    .put("URL", "http://testjs.site88.net")
+                    .build());
+}
 
     @BeforeMethod
     public void setup(){
