@@ -9,18 +9,19 @@ import models.registerUser;
 import org.testng.annotations.*;
 
 @Listeners(testNGListener.class)
-public class RegisterTest extends baseTest { // 👈 شيلنا الـ @Test من فوق الكلاس
+public class RegisterTest extends baseTest { من فوق الكلاس
 
-    @BeforeSuite
-    void setAllureEnvironment() {
-        allureEnvironmentWriter(
-                ImmutableMap.<String, String>builder()
-                        .put("Browser", "Chrome")
-                        .put("Browser.Version", "70.0.3538.77")
-                        .put("os", System.getProperty("os.name"))
-                        .put("URL", "http://testjs.site88.net")
-                        .build());
-    }
+ @BeforeSuite
+void setAllureEnvironment() {
+
+    com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter(
+            com.google.common.collect.ImmutableMap.<String, String>builder()
+                    .put("Browser", "Chrome")
+                    .put("Browser.Version", "70.0.3538.77")
+                    .put("os", System.getProperty("os.name"))
+                    .put("URL", "http://testjs.site88.net")
+                    .build());
+}
 
     @BeforeMethod
     public void setupPages(){
