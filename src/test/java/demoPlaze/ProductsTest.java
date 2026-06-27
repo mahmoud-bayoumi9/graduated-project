@@ -51,14 +51,14 @@ public class ProductsTest extends baseTest {
 
     @Test(priority = 3)
     @Description("Verify Search Functionality Using TShirt Keyword")
-    public void VerifySearchFunctionalityUsing TShirtKeyword(){
+  
+    public void VerifySearchFunctionalityUsingTShirtKeyword(){ 
         new NavigationBar(driver).clickOnProductsButton();
         ProductsPage product = new ProductsPage(driver);
         product.search("T-Shirts");
         product.searchButton();
         product.verifySearchProduct("Premium Polo T-Shirts");
     }
-
     @Test(priority = 4)
     @Description("Verify User Can Add Multiple Quantities Of The Same Product To Cart")
     public void VerifyUserCanAddMultipleQuantitiesOfTheSameProductToCart(){
