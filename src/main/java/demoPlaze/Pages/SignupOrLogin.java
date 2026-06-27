@@ -61,13 +61,22 @@ public SignupOrLogin signupOrLogin(){
         driver.action().click(RegisterButton);
         return new ConfirmationPage(driver);
     }
-    @Step("Enter Subscribe Email")
+  @Step("Enter Subscribe Email")
     public SignupOrLogin SubscribeEmail(String email){
-        driver.action().sendKey(SubscribeEmail,email);
+        // 📜 الـ Scroll السحري لأسفل الصفحة عشان الـ Footer يظهر بالكامل
+        ((org.openqa.selenium.JavascriptExecutor) driver.get())
+            .executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            
+        driver.action().sendKey(SubscribeEmail, email);
         return this;
     }
+
     @Step("Click on Subscribe Button")
     public SignupOrLogin ClickSubscribe(){
+        // ✨ نأكد الـ Scroll برضه هنا حماية إضافية قبل الضغط
+        ((org.openqa.selenium.JavascriptExecutor) driver.get())
+            .executeScript("window.scrollTo(0, document.body.scrollHeight);");
+            
         driver.action().click(SubscribeButton);
         return this;
     }
