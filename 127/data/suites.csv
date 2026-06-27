@@ -1,3 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","183","VerifyUserCanDeleteAccountSuccessfully","Surefire suite","2026-06-27","broken","2026-06-27","demoPlaze.deleteAccountTest$deleteAccount","Surefire test","demoPlaze.deleteAccountTest$deleteAccount","VerifyUserCanDeleteAccountSuccessfully"
-"","2","setUp","Surefire suite","2026-06-27","broken","2026-06-27","demoPlaze.deleteAccountTest$deleteAccount","Surefire test","demoPlaze.deleteAccountTest$deleteAccount","setUp"
