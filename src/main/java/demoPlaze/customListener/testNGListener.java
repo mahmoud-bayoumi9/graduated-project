@@ -112,17 +112,22 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     //     }
     // }
 
-public void onTestFailure(ITestResult result) {
-    // 🎯 جلب الـ instance الحالية لكلاس التيست اللي شغال دلوقتي
+@Override
+public void onTestFailure(org.testng.ITestResult result) {
     Object currentClass = result.getInstance();
-    
-    // جلب الـ WebDriver الأساسي بتاعه بأمان من غير ما نفتح session جديدة
-    WebDriver webDriver = ((baseTest) currentClass).getWebDriver();
-    
+    org.openqa.selenium.WebDriver webDriver = null;
+
+    try {
+        // 🔥 الحل العبقري: هنجيب الدالة عن طريق الـ Reflection عشان نتخطى مشكلة الـ Packages والـ compile
+        java.lang.reflect.Method method = currentClass.getClass().getMethod("getWebDriver");
+        webDriver = (org.openqa.selenium.WebDriver) method.invoke(currentClass);
+    } catch (Exception e) {
+        System.out.println("[WARN] لم نتمكن من جلب الـ WebDriver من كلاس التيست الحالي: " + e.getMessage());
+    }
+
     if (webDriver != null) {
-        // كود السكرين شوت بتاعك هنا.. مثلاً:
-        // byte[] screenshot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
-        // Allure.addAttachment("Failed Screen", new ByteArrayInputStream(screenshot));
+        // كود السكرين شوت بتاعك بـ Allure هنا سيبه زي ما هو
+        // مثلاً: Allure.addAttachment("Screenshot", ...);
     }
 }
 
