@@ -32,14 +32,21 @@ public class baseTest implements webDriverProvider {
         }
     }
 
+    // @Override
+    // public WebDriver getWebDriver() {
+    //     if (driver == null) {
+    //         System.out.println("[⚠️ EMERGENCY] تم استدعاء getWebDriver والـ driver بـ null! يتم الإنشاء الآن...");
+    //         driver = new GuiDriver();
+    //     }
+    //     return driver.get();
+    // }
     @Override
-    public WebDriver getWebDriver() {
-        if (driver == null) {
-            System.out.println("[⚠️ EMERGENCY] تم استدعاء getWebDriver والـ driver بـ null! يتم الإنشاء الآن...");
-            driver = new GuiDriver();
-        }
-        return driver.get();
+public WebDriver getWebDriver() {
+    if (driver == null) {
+        return null; // نرجع null بدل ما نفتح متصفح مشوه بره الـ BeforeMethod
     }
+    return driver.get();
+}
 
     @AfterMethod
     public void tearDown() {
