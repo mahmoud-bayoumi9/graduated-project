@@ -4,58 +4,44 @@ import demoPlaze.Pages.ProductsPage;
 import demoPlaze.Pages.commponent.NavigationBar;
 import demoPlaze.baseTest;
 import demoPlaze.customListener.testNGListener;
-import demoPlaze.drivers.GuiDriver;
-import fakergenerate.generateConfirmationUser;
 import io.qameta.allure.Owner;
 import io.qameta.allure.testng.Tag;
 import jdk.jfr.Description;
 import org.testng.annotations.*;
 
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
+
 @Listeners(testNGListener.class)
 public class Cart extends baseTest {
-    @Test
-    @Tag("userDetails")
-    @Description("User should Redirect to confirmation Page")
-//    @Issue("jjjjj")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Link("DDDDDDDD")
-    @Owner("Abanob")
 
     @BeforeSuite
     void setAllureEnvironment() {
         allureEnvironmentWriter(
                 ImmutableMap.<String, String>builder()
                         .put("Browser", "Chrome")
-                        .put("Browser.Version", "70.0.3538.77").
-                        put("os", System.getProperty("os.name"))
+                        .put("Browser.Version", "70.0.3538.77")
+                        .put("os", System.getProperty("os.name"))
                         .put("URL", "http://testjs.site88.net")
                         .build());
     }
-    models.confirmationUser conf = generateConfirmationUser.returnedConfirmationUser();
-    @BeforeMethod
-    public void setup() {
-        driver = new GuiDriver();
+
+    @Test
+    @Tag("userDetails")
+    @Description("User should be able to remove product from cart successfully")
+    @Owner("Abanob")
+    public void VerifyUserCanRemoveProductFromCartSuccessfully() {
+        // 1️⃣ المتصفح بيفتح تلقائي وبيدخل الموقع من الـ baseTest الأب
+        
+        // 2️⃣ خطوات الـ Flow للوصول للسلة (بدل ما كانت في الـ setup مسببة مشاكل)
         NavigationBar navigate = new NavigationBar(driver);
-        navigate.navigate();
         navigate.clickOnProductsButton();
 
         ProductsPage product = new ProductsPage(driver);
         product.addProduct();
-        product.viewCart(); // الـ Setup تنتهي وأنت داخل صفحة السلة (CartPage)
-    }
+        product.viewCart(); 
 
-    @Test
-    public void VerifyUserCanRemoveProductFromCartSuccessfully() {
+        // 3️⃣ تنفيذ عملية الحذف من السلة والتأكيد
         CartPage cartPage = new CartPage(driver);
         cartPage.deleteProduct();
-
-    }
-    @AfterMethod
-    public void tearDown(){
-        driver.quit();
     }
 }
-
-
-
