@@ -7,32 +7,45 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 public class baseTest implements webDriverProvider {
-    // رجعناه GuiDriver زي ما كان عشان التستات التانية متضربش كومبيلر
-    protected GuiDriver driver; 
+    // جعلناه static لضمان مشاركة نفس النسخة عبر دورة حياة الـ TestNG بالكامل
+    protected static GuiDriver driver; 
 
     @BeforeMethod
     public void setUp() {
-        // 1. إنشاء الكائن
-        driver = new GuiDriver();
+        // حماية 1: إنشاء الـ GuiDriver لو كان null
+        if (driver == null) {
+            driver = new GuiDriver();
+        }
         
-        // 2. ⚠️ خطوة الأمان: بننادي على get() هنا جوه الـ setup 
-        // عشان نجبر الـ ThreadLocal يفتح المتصفح الفعلي (Chrome/Firefox) فوراً قبل ما التست يبدأ
-        if (driver.get() == null) {
-            // لو الـ GuiDriver بتاعك جواه دالة بتعمل init أو start نادها هنا، 
-            // لكن مجرد مناداة driver.get() غالباً كافية لتشغيل الـ ThreadLocal الـ lazy-loaded
-            System.out.println("تنبيه: متصفح الـ WebDriver لم يتم إنشاؤه تلقائياً!");
+        // حماية 2: إجبار الـ المتصفح على الفتح والتحقق من قيمته
+        try {
+            if (driver.get() == null) {
+                System.out.println("[WARN] الـ WebDriver الداخلي بـ null، تأكد من كلاس GuiDriver!");
+            }
+        } catch (NullPointerException e) {
+            System.out.println("[ERROR] فشل استدعاء driver.get() من الـ GuiDriver الرئيسي.");
         }
     }
 
     @Override
     public WebDriver getWebDriver() {
+        // حماية 3 (الإنقاذ السريع): لو أي كلاس تست أو صفحة نادت الدالة دي في وقت غلط والـ driver لسه null
+        // بنخلقه فوراً في نفس اللحظة عشان التيست ميموتش
+        if (driver == null) {
+            System.out.println("[⚠️ EMERGENCY] تم استدعاء getWebDriver والـ driver بـ null! يتم الإنشاء الآن...");
+            driver = new GuiDriver();
+        }
         return driver.get();
     }
 
     @AfterMethod
     public void tearDown() {
         if (driver != null) {
-            driver.quit();
+            try {
+                driver.quit();
+            } catch (Exception e) {
+                System.out.println("[INFO] المتصفح مغلق بالفعل أو حدث خطأ أثناء الإغلاق.");
+            }
         }
     }
 }
