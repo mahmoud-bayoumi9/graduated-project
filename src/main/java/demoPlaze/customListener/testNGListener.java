@@ -95,22 +95,36 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
     }
 
     @Override
-    public void onTestFailure(ITestResult result) {
-        LogsManager.info(" TestCase [" + result.getName() + "] is failed");
+    // public void onTestFailure(ITestResult result) {
+    //     LogsManager.info(" TestCase [" + result.getName() + "] is failed");
         
-        // 🚀 أفضل وأأمن مكان لأخذ السكرين شوت لحظة الفشل فوراً قبل الـ TearDown وقبل قفل السيرفر
-        if (result.getInstance() instanceof webDriverProvider provider) {
-            WebDriver driver = provider.getWebDriver();
-            if (driver != null) {
-                try {
-                    screenShotManager.takeFullScreen(driver, "fail_" + result.getName());
-                    System.out.println("✨ [Listener] Captured Failure screenshot for: " + result.getName());
-                } catch (Exception e) {
-                    System.out.println("❌ Could not capture screenshot: " + e.getMessage());
-                }
-            }
-        }
+    //     // 🚀 أفضل وأأمن مكان لأخذ السكرين شوت لحظة الفشل فوراً قبل الـ TearDown وقبل قفل السيرفر
+    //     if (result.getInstance() instanceof webDriverProvider provider) {
+    //         WebDriver driver = provider.getWebDriver();
+    //         if (driver != null) {
+    //             try {
+    //                 screenShotManager.takeFullScreen(driver, "fail_" + result.getName());
+    //                 System.out.println("✨ [Listener] Captured Failure screenshot for: " + result.getName());
+    //             } catch (Exception e) {
+    //                 System.out.println("❌ Could not capture screenshot: " + e.getMessage());
+    //             }
+    //         }
+    //     }
+    // }
+
+public void onTestFailure(ITestResult result) {
+    // 🎯 جلب الـ instance الحالية لكلاس التيست اللي شغال دلوقتي
+    Object currentClass = result.getInstance();
+    
+    // جلب الـ WebDriver الأساسي بتاعه بأمان من غير ما نفتح session جديدة
+    WebDriver webDriver = ((baseTest) currentClass).getWebDriver();
+    
+    if (webDriver != null) {
+        // كود السكرين شوت بتاعك هنا.. مثلاً:
+        // byte[] screenshot = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+        // Allure.addAttachment("Failed Screen", new ByteArrayInputStream(screenshot));
     }
+}
 
     @Override
     public void onTestSkipped(ITestResult result) {
