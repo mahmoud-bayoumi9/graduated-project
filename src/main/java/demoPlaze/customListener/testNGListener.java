@@ -94,7 +94,7 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
         LogsManager.info(" TestCase [" + result.getName() + "] is passed");
     }
 
-    @Override
+    // @Override
     // public void onTestFailure(ITestResult result) {
     //     LogsManager.info(" TestCase [" + result.getName() + "] is failed");
         
