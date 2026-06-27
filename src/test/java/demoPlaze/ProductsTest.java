@@ -10,22 +10,22 @@ import io.qameta.allure.testng.Tag;
 import io.qameta.allure.Description; // تصحيح مكتبة الـ Description لتكون تابعة لـ Allure
 import org.testng.annotations.*;
 
-import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
+// import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 @Listeners(testNGListener.class)
 public class ProductsTest extends baseTest {
 
-    @BeforeSuite
-    void setAllureEnvironment() {
-        // 👈 شيلنا الـ @Test والـ @Description الغلط اللي كانوا فوق الدالة دي
-        allureEnvironmentWriter(
-                ImmutableMap.<String, String>builder()
-                        .put("Browser", "Chrome")
-                        .put("Browser.Version", "70.0.3538.77")
-                        .put("os", System.getProperty("os.name"))
-                        .put("URL", "http://testjs.site88.net")
-                        .build());
-    }
+   @BeforeSuite
+void setAllureEnvironment() {
+
+    com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter(
+            com.google.common.collect.ImmutableMap.<String, String>builder()
+                    .put("Browser", "Chrome")
+                    .put("Browser.Version", "70.0.3538.77")
+                    .put("os", System.getProperty("os.name"))
+                    .put("URL", "http://testjs.site88.net")
+                    .build());
+}
 
     models.confirmationUser conf = generateConfirmationUser.returnedConfirmationUser();
 
