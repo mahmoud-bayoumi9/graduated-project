@@ -8,19 +8,14 @@ import org.testng.annotations.BeforeMethod;
 
 public class baseTest implements webDriverProvider {
     
-    // ❌ شيلنا الـ static عشان نضمن أن الـ Threads متضربش بعضها في التوازي
-    protected GuiDriver driver; 
+    // 🛡️ نخليها final عشان نضمن إن الـ Instance دي ثابتة ومستقرة ومحدش يصفرها بالتوازي
+    protected final GuiDriver driver = new GuiDriver(); 
 
     @BeforeMethod
     public void setUp() {
-        // إنشاء نسخة جديدة مستقلة لكل كلاس تيست
-        if (driver == null) {
-            driver = new GuiDriver();
-        }
-        
         try {
+            // 🚀 الـ GuiDriver ثابت، بس الـ ThreadLocal جواه بيفتح متصفح جديد ونظيف لكل تيست هنا بأمان
             if (driver.get() != null) {
-                // 🌍 التوجيه للموقع الأساسي مباشرة لضمان عدم الوقوف على صفحة بيضاء
                 driver.get().navigate().to("https://automationexercise.com");
                 driver.get().manage().window().maximize();
                 System.out.println("[INFO] Navigated to Automation Exercise successfully.");
@@ -32,37 +27,22 @@ public class baseTest implements webDriverProvider {
         }
     }
 
-    // @Override
-    // public WebDriver getWebDriver() {
-    //     if (driver == null) {
-    //         System.out.println("[⚠️ EMERGENCY] تم استدعاء getWebDriver والـ driver بـ null! يتم الإنشاء الآن...");
-    //         driver = new GuiDriver();
-    //     }
-    //     return driver.get();
-    // }
-@Override
+    @Override
     public WebDriver getWebDriver() {
-        // 🛑 الحماية القصوى: لو الـ driver طار أو لسه مجهزش، ارجع null فوراً
-        // ممنوع تماماً تعمل driver = new GuiDriver() هنا لأن ده اللي بيفتح متصفح أقرع (بدون args) وبيجيب إيرور 500
-        if (driver == null) {
-            System.out.println("[INFO] getWebDriver invoked but driver is null. Blocking session creation.");
-            return null; 
-        }
-        return driver.get();
+        // بيرجع الـ driver الحالي للكلاس بأمان ومن غير ريسك لفتح متصفح أقرع
+        return (driver != null) ? driver.get() : null;
     }
 
     @AfterMethod
     public void tearDown() {
-        if (driver != null) {
+        if (driver != null && driver.get() != null) {
             try {
-                driver.quit();
+                driver.quit(); // 🔒 بيقفل المتصفح الحالي وبيعمل للـ ThreadLocal .remove() عشان ينظف الـ Thread
                 System.out.println("[INFO] تم إغلاق جلسة المتصفح بنجاح.");
             } catch (Exception e) {
                 System.out.println("[INFO] المتصفح مغلق بالفعل أو حدث خطأ أثناء الإغلاق.");
-            } finally {
-                // 👍 تصفير الـ instance الحالية بأمان للكلاس الحالي بدون التأثير على الكلاسات الأخرى الشغالة بالتوازي
-                driver = null; 
             }
+            // ❌ شيلنا سطر driver = null تماماً عشان ميبوظش الـ Instance الثابتة
         }
     }
 }
