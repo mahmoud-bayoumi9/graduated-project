@@ -30,9 +30,7 @@ public class Cart extends baseTest {
     @Description("User should be able to remove product from cart successfully")
     @Owner("Abanob")
     public void VerifyUserCanRemoveProductFromCartSuccessfully() {
-        // 1️⃣ المتصفح بيفتح تلقائي وبيدخل الموقع من الـ baseTest الأب
         
-        // 2️⃣ خطوات الـ Flow للوصول للسلة (بدل ما كانت في الـ setup مسببة مشاكل)
         NavigationBar navigate = new NavigationBar(driver);
         navigate.clickOnProductsButton();
 
@@ -40,7 +38,6 @@ public class Cart extends baseTest {
         product.addProduct();
         product.viewCart(); 
 
-        // 3️⃣ تنفيذ عملية الحذف من السلة والتأكيد
         CartPage cartPage = new CartPage(driver);
         cartPage.deleteProduct();
     }
