@@ -13,7 +13,6 @@ public class propertyReader {
         try{
             Properties properties=new Properties();
             Collection<File> propertiesFiles;
-            // البارامتر الثالث (true) يعني هيدور كمان جوة الفولدرات الفرعية Subdirectories
             File resourcesDir = new File("src/main/resources");
             propertiesFiles = FileUtils.listFiles(resourcesDir , new String[]{"properties"}, true);
             propertiesFiles.forEach(file ->{
