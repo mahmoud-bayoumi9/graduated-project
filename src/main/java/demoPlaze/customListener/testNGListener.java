@@ -76,7 +76,6 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
         AllureReportGenerator.generateReport(true);
         AllureReportGenerator.renameReport();
 
-        // 🚀 تم تصليح الكارثة هنا: منع فتح السيرفر التفاعلي نهائياً لو شغالين على الـ CI/CD لضمان عدم الكراش
         if (System.getenv("GITHUB_ACTIONS") == null) {
             AllureReportGenerator.openReport();
         } else {
@@ -94,23 +93,7 @@ public class testNGListener implements ITestListener, IInvokedMethodListener, IE
         LogsManager.info(" TestCase [" + result.getName() + "] is passed");
     }
 
-    // @Override
-    // public void onTestFailure(ITestResult result) {
-    //     LogsManager.info(" TestCase [" + result.getName() + "] is failed");
-        
-    //     // 🚀 أفضل وأأمن مكان لأخذ السكرين شوت لحظة الفشل فوراً قبل الـ TearDown وقبل قفل السيرفر
-    //     if (result.getInstance() instanceof webDriverProvider provider) {
-    //         WebDriver driver = provider.getWebDriver();
-    //         if (driver != null) {
-    //             try {
-    //                 screenShotManager.takeFullScreen(driver, "fail_" + result.getName());
-    //                 System.out.println("✨ [Listener] Captured Failure screenshot for: " + result.getName());
-    //             } catch (Exception e) {
-    //                 System.out.println("❌ Could not capture screenshot: " + e.getMessage());
-    //             }
-    //         }
-    //     }
-    // }
+
 
 @Override
 public void onTestFailure(org.testng.ITestResult result) {
@@ -118,7 +101,6 @@ public void onTestFailure(org.testng.ITestResult result) {
     org.openqa.selenium.WebDriver webDriver = null;
 
     try {
-        // 🔥 الحل العبقري: هنجيب الدالة عن طريق الـ Reflection عشان نتخطى مشكلة الـ Packages والـ compile
         java.lang.reflect.Method method = currentClass.getClass().getMethod("getWebDriver");
         webDriver = (org.openqa.selenium.WebDriver) method.invoke(currentClass);
     } catch (Exception e) {
@@ -126,7 +108,6 @@ public void onTestFailure(org.testng.ITestResult result) {
     }
 
     if (webDriver != null) {
-        // كود السكرين شوت بتاعك بـ Allure هنا سيبه زي ما هو
         // مثلاً: Allure.addAttachment("Screenshot", ...);
     }
 }
@@ -154,8 +135,6 @@ public void onTestFailure(org.testng.ITestResult result) {
         if (method.isTestMethod()) {
             validation.assertAll();
             
-            // تم نقل الـ Failure screenshot لميثود onTestFailure الأصلية والآمنة
-            // ونبقي هنا فقط على الـ Success والـ Skip لو المتصفح لسه مفتوح وبحماية try/catch
             WebDriver driver = null;
             if (testResult.getInstance() instanceof webDriverProvider provider) {
                 driver = provider.getWebDriver();
