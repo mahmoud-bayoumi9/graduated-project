@@ -9,8 +9,6 @@ public class validation extends BasAssertion {
     public validation(WebDriver driver) {
         super(driver);
     }
-
-    // 🚀 تحويل الـ SoftAssert لـ ThreadLocal لحماية التشغيل المتوازي ومنع تداخل التيستات
     private static final ThreadLocal<SoftAssert> softAssertThreadLocal = ThreadLocal.withInitial(SoftAssert::new);
     private static final ThreadLocal<Boolean> usedThreadLocal = ThreadLocal.withInitial(() -> false);
 
@@ -33,7 +31,6 @@ public class validation extends BasAssertion {
     }
 
     public static void assertAll() {
-        // إذا لم يتم استخدام الـ assert في هذا الـ Thread، اخرج فوراً
         if (!usedThreadLocal.get()) {
             return;
         }
@@ -44,7 +41,6 @@ public class validation extends BasAssertion {
             LogsManager.error("SoftAssert Failure: " + e.getMessage());
             throw e;
         } finally {
-            // 🧹 تنظيف الـ ThreadLocal الحالي بعد انتهاء التيست تماماً لعدم تسريب البيانات
             softAssertThreadLocal.remove();
             usedThreadLocal.remove();
         }
