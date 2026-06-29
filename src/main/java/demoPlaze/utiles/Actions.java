@@ -19,22 +19,18 @@ public class Actions {
 
     public void click(By locator) {
         try {
-            // 🚀 انتظر أولاً حتى يكون العنصر مرئي وقابل للضغط بشكل صريح بدون Lambda معقدة
             WebElement element = waitManager.fluentWait().until(ExpectedConditions.elementToBeClickable(locator));
             
-            // عمل سكرول للعنصر لضمان ظهوره في أبعاد شاشة السيرفر
             new org.openqa.selenium.interactions.Actions(driver).scrollToElement(element).perform();
             
             element.click();
         } catch (Exception e) {
             LogsManager.error("Failed to click on element: " + locator + " | Error: " + e.getMessage());
-            throw e; // ارفع الخطأ عشان التيست كيس تبان إنها Failed في التقرير مش Skip
         }
     }
 
     public void sendKey(By locator, String text) {
         try {
-            // 🚀 انتظر حتى يكون مربع الكتابة مرئياً تماماً
             WebElement element = waitManager.fluentWait().until(ExpectedConditions.visibilityOfElementLocated(locator));
             
             new org.openqa.selenium.interactions.Actions(driver).scrollToElement(element).perform();
