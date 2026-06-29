@@ -7,8 +7,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class chromeFactory extends abstractDriver{
    private ChromeOptions getOption(){
        ChromeOptions option=new ChromeOptions();
-       option.addArguments("--start-maximized"); // يفتح المتصفح شاشة كاملة تلقائياً
-       option.addArguments("--disable-infobars"); // يخفي شريط "Chrome is being controlled by automated software"
+       option.addArguments("--start-maximized");     
+       option.addArguments("--disable-infobars"); 
        option.addArguments("--remote-allow-origins=*");
 
        return option;
