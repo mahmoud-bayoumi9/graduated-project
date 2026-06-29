@@ -1,20 +1,4 @@
-//package demoPlaze.utiles;
-//
-//import demoPlaze.utiles.logs.LogsManager;
-//
-//public class TerminalUtiles {
-//    public static void executeTerminalCommand(String...commandParts){
-//        try {
-//            Process process=Runtime.getRuntime().exec(commandParts);
-//            int exitCode=process.waitFor();
-//            if(exitCode!=0){
-//                LogsManager.error("command failed with exitCode "+exitCode);
-//            }
-//        } catch (Exception e) {
-//            LogsManager.error(e.getMessage());
-//        }
-//    }
-//}
+
 package demoPlaze.utiles;
 
 import demoPlaze.utiles.logs.LogsManager;
