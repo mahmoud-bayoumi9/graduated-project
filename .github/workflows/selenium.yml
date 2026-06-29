@@ -6,14 +6,12 @@ on:
   pull_request:
     branches: [ "main", "master" ]
   workflow_dispatch: 
-
-# إعطاء صلاحيات للسيرفر عشان يقدر يكتب ويرفع الـ Report على GitHub Pages
 permissions:
   contents: write
 
 jobs:
   test:
-    runs-on: ubuntu-latest # 👈 رجعناه Linux عشان الـ Allure Container يشتغل بدون أخطاء
+    runs-on: //
 
     steps:
     - name: Checkout code
@@ -27,10 +25,10 @@ jobs:
         cache: 'maven'
 
     - name: Run Selenium Tests
-      # 👈 شيلنا الـ shell: cmd والـ علامات التنصيص لأننا رجعنا لبيئة الـ Linux العادية
+     
       run: mvn test -Dmaven.test.failure.ignore=true
 
-    # 🚀 خطوة 1: جلب تاريخ التقارير القديمة
+
     - name: Get Allure history
       uses: actions/checkout@v4
       if: always()
@@ -38,7 +36,6 @@ jobs:
         ref: gh-pages
         path: gh-pages
 
-    # 🚀 خطوة 2: تجميع الـ Results مع الـ History لتوليد التقرير
     - name: Allure Report Action
       uses: simple-elf/allure-report-action@master
       if: always()
@@ -47,7 +44,7 @@ jobs:
         allure_history: allure-history
         keep_reports: 20
 
-    # 🚀 خطوة 3: نشر التقرير على برانش gh-pages
+
     - name: Deploy Allure Report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       if: always()
