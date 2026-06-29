@@ -25,7 +25,7 @@ public class AllureReportGenerator {
             if (isSingleFile) command.add("--single-file");
 
             Process process = new ProcessBuilder(command).start();
-            process.waitFor(); // الانتظار الإجباري حتى انتهاء التوليد
+            process.waitFor(); 
         } catch (Exception e) {
             System.err.println("Report Generation Failed: " + e.getMessage());
         }
@@ -35,7 +35,6 @@ public class AllureReportGenerator {
         try {
             String allureExecutable = demoPlaze.utiles.report.AllureBinaryManager.getExecutable().toAbsolutePath().toString();
 
-            // فتح السيرفر في نافذة CMD مستقلة تماماً ومستمرة بالخيار /k
             ProcessBuilder builder = new ProcessBuilder(
                     "cmd.exe", "/c", "start", "cmd.exe", "/k",
                     allureExecutable, "serve", demoPlaze.utiles.report.AllureConstant.RESULT_FOLDER.toAbsolutePath().toString()
@@ -49,7 +48,6 @@ public class AllureReportGenerator {
     public static String renameReport() {
         String newFileName = demoPlaze.utiles.report.AllureConstant.REPORT_PREFIX + timeManager.getTimestamp() + demoPlaze.utiles.report.AllureConstant.REPORT_EXTENSION;
 
-        // تم إصلاح نقطة السنتكس وربطها بـ demoPlaze بالكامل
         String sourcePath = demoPlaze.utiles.report.AllureConstant.REPORT_PATH.resolve(demoPlaze.utiles.report.AllureConstant.INDEX_HTML).toString();
 
         FileUtiles.renameFile(sourcePath, newFileName);
