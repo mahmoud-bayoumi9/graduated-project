@@ -13,7 +13,7 @@ public class verification extends BasAssertion {
 
     public verification(WebDriver driver){
         super(driver);
-        this.waitManager = new waitManager(driver); // تعريف الـ waitManager ليكون مربوطاً بدرايفر الـ Thread الحالي
+        this.waitManager = new waitManager(driver);  
     }
 
     @Override
@@ -33,10 +33,8 @@ public class verification extends BasAssertion {
 
     public void isvisiable(By loc){
         try {
-            // 🚀 استخدام الـ ExpectedConditions الجاهزة والسريعة على السيرفر بدلاً من اللامبدا
             WebElement element = waitManager.fluentWait().until(ExpectedConditions.visibilityOfElementLocated(loc));
             
-            // التأكيد المباشر طالما الـ Wait عدى بنجاح والعنصر رجع مرئي
             assertTrue(element.isDisplayed(), "Element located by " + loc + " is not visible");
         } catch (Exception e) {
             assertTrue(false, "Element located by " + loc + " was not found or not visible within timeout. Error: " + e.getMessage());
@@ -44,11 +42,9 @@ public class verification extends BasAssertion {
     }
 
     public void assertPageUrl(String url){
-        // انتظر حتى يتغير الـ URL للـ URL المتوقع لضمان عدم التسرع في الـ Assert على السيرفر
         try {
             waitManager.fluentWait().until(ExpectedConditions.urlToBe(url));
         } catch (Exception e) {
-            // لو الـ timeout خلص، الـ Assert تحت هيطلع الـ Error المظبوط في التقرير
         }
         String actualUrl = driver.getCurrentUrl();
         assertequal(actualUrl, url, "Actual URL does not match the expected: " + url);
