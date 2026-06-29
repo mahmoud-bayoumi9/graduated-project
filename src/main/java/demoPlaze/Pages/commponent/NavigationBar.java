@@ -12,7 +12,6 @@ public class NavigationBar {
         this.driver = driver;
     }
 
-    // 🎯 تصحيح وتأمين الـ Locators باستخدام النقطة (.) لتخطي مشاكل الأيقونات والمسافات
     private final By homeButton = By.xpath("//a[contains(., 'Home')]");
     private final By LogoutButton = By.xpath("//a[contains(., 'Logout')]");
     private final By productButton = By.xpath("//a[contains(., 'Products')]");
@@ -23,7 +22,7 @@ public class NavigationBar {
     private final By VideoTutorials = By.xpath("//a[contains(., 'Video Tutorials')]");
     private final By Contactus = By.xpath("//a[contains(., 'Contact us')]");
     private final By deleteAccount = By.xpath("//a[contains(., 'Delete Account')]");
-    private final By LoggedInAs = By.xpath("//a[contains(., 'Logged in as')]/b"); // ⚡ تحديد الـ <b> اللي جوه الـ لينك مباشرة
+    private final By LoggedInAs = By.xpath("//a[contains(., 'Logged in as')]/b");  
 
     @Step("Navigate To HomePage")
     public NavigationBar navigate(){
