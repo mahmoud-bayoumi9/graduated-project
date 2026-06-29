@@ -61,41 +61,18 @@ public class AllureBinaryManager {
             e.printStackTrace();
         }
     }
-//    public static Path getExecutable() {
-//        String version = lazyLoader.version;
-//        Path binaryPath = Paths.get(AllureConstant.EXTRACTION_DIR.toString(), "allure-" + version, "bin", "allure");
-//
-//        if (osutiles.getCurrentOs() == osutiles.OPERATING.WINDOWS) {
-//            return binaryPath.resolveSibling(binaryPath.getFileName().toString() + ".bat");
-//        }
-//        return binaryPath;
-//    }
+
 public static Path getExecutable() {
     String version = lazyLoader.version;
-
-    // بناء اسم الملف التنفيذي بناءً على نظام التشغيل
     String executableName = (osutiles.getCurrentOs() == osutiles.OPERATING.WINDOWS) ? "allure.bat" : "allure";
-
-    // إرجاع المسار المطلق الصحيح والدقيق بنسبة 100%
     return Paths.get(AllureConstant.EXTRACTION_DIR.toString(), "allure-" + version, "bin", executableName);
 }
     private static class lazyLoader {
         private static final String version = resolveVersion();
         private static String resolveVersion() {
-            // إرجاع إصدار ثابت مباشرة لمنع أي اتصال خارجي بالإنترنت يبطئ التيست
             return "2.24.0";
         }
-//        private static String resolveVersion() {
-//            try {
-//                String url = Jsoup.connect("https://api.github.com/repos/allure-framework/allure2/releases/latest")
-//                        .followRedirects(true).execute().url().toString();
-//                return url.split("/tag/")[1];
-//            } catch (Exception e) {
-//                LogsManager.error("Unable to resolve latest Allure version from GitHub: " + e.getMessage());
-//                throw new IllegalStateException("Unable to resolve Allure version", e);
-//            }
-//        }
-//    }
+
     private static Path downloadZip(String version) {
         try {
             String url = AllureConstant.ALLURE_ZIP_BASE_URL + version + "/allure-commandline-" + version + ".zip";
